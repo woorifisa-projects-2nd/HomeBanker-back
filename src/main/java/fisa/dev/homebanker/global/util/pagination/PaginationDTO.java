@@ -1,4 +1,4 @@
-package fisa.dev.homebanker.domain.board.dto;
+package fisa.dev.homebanker.global.util.pagination;
 
 import lombok.Builder;
 import lombok.Getter;

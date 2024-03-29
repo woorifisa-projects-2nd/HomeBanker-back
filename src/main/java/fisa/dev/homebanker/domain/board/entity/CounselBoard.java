@@ -22,7 +22,7 @@ import lombok.NoArgsConstructor;
 public class CounselBoard {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long boardId;
 
   //FK 설정 추가해야함.

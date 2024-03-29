@@ -1,6 +1,7 @@
 package fisa.dev.homebanker.domain.board.dto;
 
 
+import fisa.dev.homebanker.global.util.pagination.PaginationDTO;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
