@@ -11,6 +11,6 @@ public enum ProductType {
   LOAN("loan", "대출"),
   DEPOSIT("deposit", "예금");
 
-  private String english;
-  private String korean;
+  private final String english;
+  private final String korean;
 }

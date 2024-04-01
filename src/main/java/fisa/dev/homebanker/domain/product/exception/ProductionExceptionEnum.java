@@ -9,7 +9,8 @@ import org.springframework.http.HttpStatus;
 public enum ProductionExceptionEnum {
   P001("해당 상품이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
   POO2("페이지 번호는 0부터 시작합니다.", HttpStatus.NOT_ACCEPTABLE),
-  P003("해당 카테고리는 존재하지 않습니다.", HttpStatus.NOT_FOUND);
+  P003("해당 카테고리는 존재하지 않습니다.", HttpStatus.NOT_FOUND),
+  P004("페이지 크기는 1 이상이여야 합니다.", HttpStatus.BAD_REQUEST);
 
 
   private final String msg;

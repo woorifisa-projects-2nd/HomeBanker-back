@@ -9,11 +9,9 @@ import fisa.dev.homebanker.domain.product.exception.ProductException;
 import fisa.dev.homebanker.domain.product.exception.ProductionExceptionEnum;
 import fisa.dev.homebanker.domain.product.repository.ProductRepository;
 import fisa.dev.homebanker.global.util.pagination.PaginationResMaker;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,32 +29,38 @@ public class ProductService {
     if (page < 0) {
       throw new ProductException(ProductionExceptionEnum.POO2);
     }
+    if (size <= 0) {
+      throw new ProductException(ProductionExceptionEnum.P004);
+    }
+    ProductListDTO productListDTO = new ProductListDTO();
 
     Pageable pageable = PageRequest.of(page, size);
     Page<Product> foundPage;
     if (category.equals("all")) {
       foundPage = productRepository.findAll(pageable);
     } else {
-      List<ProductType> collect = Arrays.stream(ProductType.values())
-          .filter(v -> v.getEnglish().equals(category))
-          .collect(Collectors.toList());
-      if (collect.size() == 0) {
-        throw new ProductException(ProductionExceptionEnum.P003);
-      }
-      foundPage = productRepository.findByProductCodeTypeName(collect.get(0).getKorean(), pageable);
+      String typeName = findTypeName(category);
+      foundPage = productRepository.findByProductCodeTypeName(typeName, pageable);
     }
-
-    ProductListDTO productListDTO = new ProductListDTO();
     productListDTO.setPagination(paginationResMaker.makePaginationDto(foundPage)); //페이지네이션 세팅
 
-    List<ProductDTO> productItems = new ArrayList<>();
-    for (Product p : foundPage.getContent()) {
-      productItems.add(p.toDto());
-    }
-
+    List<ProductDTO> productItems = foundPage.get()
+        .map(product -> product.toDto())
+        .toList();
     productListDTO.setProductItems(productItems);
 
     return productListDTO;
+  }
+
+  public String findTypeName(String category) {
+    Optional<ProductType> optional = Arrays.stream(ProductType.values())
+        .filter(c -> c.getEnglish().equals(category))
+        .findAny();
+    if (optional.isEmpty()) {
+      throw new ProductException(ProductionExceptionEnum.P003);
+    }
+    String typeName = optional.get().getKorean();
+    return typeName;
   }
 
   public ChangeVisibilityDTO changeVisibility(ChangeVisibilityDTO dto) {

@@ -5,6 +5,7 @@ import fisa.dev.homebanker.domain.product.dto.ProductListDTO;
 import fisa.dev.homebanker.domain.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -31,7 +32,7 @@ public class ProductController {
   @GetMapping("")
   public ResponseEntity<ProductListDTO> findAllProducts(
       @RequestParam(defaultValue = "all") String category,
-      @RequestParam Integer size, @RequestParam Integer page) {
+      @RequestParam Integer size, @RequestParam(defaultValue = "0") Integer page) {
     return ResponseEntity.ok(productService.findAllProducts(category, size, page));
   }
 
@@ -42,7 +43,8 @@ public class ProductController {
    * @return (상품 id, 상품의 변경된 노출 상태)
    */
   @PostMapping("/show")
-  public ResponseEntity<ChangeVisibilityDTO> changeVisible(@RequestBody ChangeVisibilityDTO dto) {
+  public ResponseEntity<ChangeVisibilityDTO> changeVisible(
+      @RequestBody @Validated ChangeVisibilityDTO dto) {
     return ResponseEntity.ok(productService.changeVisibility(dto));
   }
 

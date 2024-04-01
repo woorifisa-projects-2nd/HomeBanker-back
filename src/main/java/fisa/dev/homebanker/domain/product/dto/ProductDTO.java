@@ -10,7 +10,6 @@ import lombok.Getter;
 public class ProductDTO {
 
   private Long productId;
-  private String typeName;
   private ProductCode productCode;
   private String productDescription;
   private BigDecimal productInterest;
