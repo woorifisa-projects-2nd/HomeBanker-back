@@ -1,5 +1,6 @@
 package fisa.dev.homebanker.global.exception;
 
+import fisa.dev.homebanker.domain.board.exception.CounselBoardException;
 import fisa.dev.homebanker.domain.product.exception.ProductException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +60,12 @@ public class GlobalExceptionHandler {
       MethodArgumentNotValidException e) {
     ExceptionResponse response = new ExceptionResponse(e.getFieldError().getDefaultMessage(),
         HttpStatus.BAD_REQUEST);
+    return new ResponseEntity(response, response.getStatus());
+  }
+
+  @ExceptionHandler(CounselBoardException.class)
+  public ResponseEntity<ExceptionResponse> CounselBoardException(CounselBoardException e) {
+    ExceptionResponse response = new ExceptionResponse(e.getMsg(), e.getStatus());
     return new ResponseEntity(response, response.getStatus());
   }
 

@@ -4,10 +4,11 @@ import fisa.dev.homebanker.domain.board.dto.CounselBoardContentDTO;
 import fisa.dev.homebanker.domain.board.dto.CounselBoardDTO;
 import fisa.dev.homebanker.domain.board.dto.CounselBoardListDTO;
 import fisa.dev.homebanker.domain.board.entity.CounselBoard;
+import fisa.dev.homebanker.domain.board.exception.CounselBoardException;
+import fisa.dev.homebanker.domain.board.exception.CounselBoardExceptionEnum;
 import fisa.dev.homebanker.domain.board.repository.CounselBoardRepository;
 import fisa.dev.homebanker.global.util.pagination.PaginationResMaker;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -23,17 +24,21 @@ public class CounselBoardService {
   private final PaginationResMaker paginationResMaker;
 
   public CounselBoardListDTO readAllCounselBoards(Integer page, Integer size) {
-    Pageable pageable = PageRequest.of(size, page);
+    if (page < 0) {
+      throw new CounselBoardException(CounselBoardExceptionEnum.C002);
+    }
+    if (size <= 0) {
+      throw new CounselBoardException(CounselBoardExceptionEnum.C003);
+    }
+    Pageable pageable = PageRequest.of(page, size);
     Page<CounselBoard> foundPage = counselBoardRepository.findAll(pageable);
 
     CounselBoardListDTO counselBoardListDTO = new CounselBoardListDTO();
     counselBoardListDTO.setPagination(paginationResMaker.makePaginationDto(foundPage)); //페이지네이션 세팅
 
-    List<CounselBoardDTO> boardItems = new ArrayList<>();
-    for (CounselBoard c : foundPage.getContent()) {
-
-      boardItems.add(c.toDto());
-    }
+    List<CounselBoardDTO> boardItems = foundPage.getContent().stream()
+        .map(c -> c.toDto())
+        .toList();
 
     counselBoardListDTO.setBoardItems(boardItems);
     return counselBoardListDTO;
@@ -41,8 +46,9 @@ public class CounselBoardService {
   }
 
   public CounselBoardDTO readCounselBoard(Long boardId) {
-    CounselBoardDTO counselBoardDTO;
-    return counselBoardRepository.findById(boardId).orElseThrow().toDto();
+    return counselBoardRepository.findById(boardId)
+        .orElseThrow(() -> new CounselBoardException(CounselBoardExceptionEnum.C001))
+        .toDto();
 
   }
 

@@ -15,11 +15,21 @@ public class BankerCounselBoardController {
 
   private final BankerCounselBoardService bankerCounselBoardService;
 
+  /**
+   * 상담 게시글 삭제
+   *
+   * @param boardId 게시글 id
+   */
   @DeleteMapping("/{boardId}")
   public void deleteBoard(@PathVariable Long boardId) {
     bankerCounselBoardService.deleteBoard(boardId);
   }
 
+  /**
+   * 유선 회신 여부 업데이트
+   *
+   * @param boardId 게시글 id
+   */
   @PutMapping("/{boardId}")
   public void updateReply(@PathVariable Long boardId) {
     bankerCounselBoardService.updateReply(boardId);

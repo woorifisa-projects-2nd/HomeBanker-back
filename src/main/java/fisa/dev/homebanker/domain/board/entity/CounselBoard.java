@@ -32,7 +32,6 @@ public class CounselBoard {
 
   @Column(name = "reply_YN", nullable = false)
   private String reply;
-  //default value를 N으로 설정해야함
 
   @Column(nullable = false)
 
@@ -56,5 +55,9 @@ public class CounselBoard {
 
   public void setReply(String reply) {
     this.reply = reply;
+  }
+
+  public void setUpdatedAt(LocalDateTime updatedAt) {
+    this.updatedAt = updatedAt;
   }
 }
