@@ -19,6 +19,7 @@ CREATE TABLE `customer` (
 	`customer_address`	VARCHAR(50)	NOT NULL,
 	`customer_login_id`	VARCHAR(20)	NOT NULL,
 	`customer_login_pw`	VARCHAR(30)	NOT NULL,
+	`customer_role` VARCHAR(15) NOT NULL,
 	`customer_identification_num`	VARCHAR(200)	NOT NULL,
 	`customer_recent_login`	DATETIME	NOT NULL,
 	`join_date`	DATE	NOT NULL

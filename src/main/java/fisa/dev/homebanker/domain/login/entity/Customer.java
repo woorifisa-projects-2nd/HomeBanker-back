@@ -44,6 +44,9 @@ public class Customer {
   private String customerLoginPw;
 
   @Column(nullable = false)
+  private String customerRole;
+
+  @Column(nullable = false)
   private String customerIdentificationNum;
 
   @Column(nullable = false)

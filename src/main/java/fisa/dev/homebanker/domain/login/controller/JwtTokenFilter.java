@@ -1,7 +1,7 @@
 //package fisa.dev.homebanker.domain.login.controller;
 //
-//import fisa.dev.homebanker.domain.login.entity.User;
-//import fisa.dev.homebanker.domain.login.service.UserService;
+//import fisa.dev.homebanker.domain.login.service.CustomerService;
+//import fisa.dev.homebanker.domain.login.service.EmployeeService;
 //import jakarta.servlet.FilterChain;
 //import jakarta.servlet.ServletException;
 //import jakarta.servlet.http.HttpServletRequest;
@@ -20,7 +20,9 @@
 //@RequiredArgsConstructor
 //public class JwtTokenFilter extends OncePerRequestFilter {
 //
-//  private final UserService userService;
+//  private final CustomerService customerService;
+//  private final EmployeeService employeeService;
+//
 //  private final String secretKey;
 //
 //  @Override

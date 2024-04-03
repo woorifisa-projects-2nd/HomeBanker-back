@@ -1,41 +1,103 @@
-//package fisa.dev.homebanker.domain.login.controller;
-//
-//import io.jsonwebtoken.Claims;
-//import io.jsonwebtoken.Jwts;
-//import io.jsonwebtoken.SignatureAlgorithm;
-//import java.util.Date;
-//
-//public class JwtTokenUtil {
-//
-//  // JWT Token 발급
-//  public static String createToken(String loginId, String key, long expireTimeMs) {
-//    // Claim = Jwt Token에 들어갈 정보
-//    // Claim에 loginId를 넣어 줌으로써 나중에 loginId를 꺼낼 수 있음
-//    Claims claims = Jwts.claims();
-//    claims.put("loginId", loginId);
-//
-//    return Jwts.builder()
-//        .setClaims(claims)
-//        .setIssuedAt(new Date(System.currentTimeMillis()))
-//        .setExpiration(new Date(System.currentTimeMillis() + expireTimeMs))
-//        .signWith(SignatureAlgorithm.HS256, key)
-//        .compact();
-//  }
-//
-//  // Claims에서 loginId 꺼내기
-//  public static String getLoginId(String token, String secretKey) {
-//    return extractClaims(token, secretKey).get("loginId").toString();
-//  }
-//
-//  // 발급된 Token이 만료 시간이 지났는지 체크
-//  public static boolean isExpired(String token, String secretKey) {
-//    Date expiredDate = extractClaims(token, secretKey).getExpiration();
-//    // Token의 만료 날짜가 지금보다 이전인지 check
-//    return expiredDate.before(new Date());
-//  }
-//
-//  // SecretKey를 사용해 Token Parsing
-//  private static Claims extractClaims(String token, String secretKey) {
-//    return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
-//  }
-//}
+package fisa.dev.homebanker.domain.login.controller;
+
+import fisa.dev.homebanker.domain.login.entity.Customer;
+import fisa.dev.homebanker.domain.login.entity.Employee;
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.JwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.Encoders;
+import io.jsonwebtoken.security.Keys;
+import java.security.Key;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
+
+@Component
+public class JwtTokenUtil {
+
+  @Value("${spring.jwt.secret}")
+  private String secretKey;
+
+  private String createToken(Map<String, Object> claims) {
+    String secretKeyEncodeBase64 = Encoders.BASE64.encode(secretKey.getBytes());
+    byte[] keyBytes = Decoders.BASE64.decode(secretKeyEncodeBase64);
+    Key key = Keys.hmacShaKeyFor(keyBytes);
+
+    return Jwts.builder()
+        .signWith(key)
+        .setClaims(claims)
+        .setIssuedAt(new Date(System.currentTimeMillis()))
+        .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 하루동안 유지
+        .compact();
+  }
+
+  public String generateCustomerToken(Customer customer) {
+    Map<String, Object> claims = new HashMap<>();
+    claims.put("CustomerLoginId", customer.getCustomerLoginId());
+    claims.put("CustomerRole", customer.getCustomerRole());
+    return createToken(claims);
+  }
+
+  public String generateEmployeeToken(Employee employee) {
+    Map<String, Object> claims = new HashMap<>();
+    claims.put("EmployeeLoginId", employee.getEmployeeLoginId());
+    claims.put("EmployeeRole", employee.getEmployeeRole());
+    return createToken(claims);
+  }
+
+  private Claims extractAllClaims(String token) {
+    if (StringUtils.isEmpty(token)) {
+      return null;
+    }
+    String secretKeyEncodeBase64 = Encoders.BASE64.encode(secretKey.getBytes());
+    Claims claims = null;
+    try {
+      claims = Jwts.parserBuilder().setSigningKey(secretKeyEncodeBase64).build()
+          .parseClaimsJws(token).getBody();
+    } catch (JwtException e) {
+      claims = null;
+    }
+    return claims;
+  }
+
+  public String extractCustomerName(String token) {
+    final Claims claims = extractAllClaims(token);
+    if (claims == null) {
+      return null;
+    } else {
+      return claims.get("CustomerLoginId", String.class);
+    }
+  }
+
+  public String extractCustomerRole(String token) {
+    final Claims claims = extractAllClaims(token);
+    if (claims == null) {
+      return null;
+    } else {
+      return claims.get("CustomerRole", String.class);
+    }
+  }
+
+  public String extractEmployeeName(String token) {
+    final Claims claims = extractAllClaims(token);
+    if (claims == null) {
+      return null;
+    } else {
+      return claims.get("EmployeeLoginId", String.class);
+    }
+  }
+
+  public String extractEmployeeRole(String token) {
+    final Claims claims = extractAllClaims(token);
+    if (claims == null) {
+      return null;
+    } else {
+      return claims.get("EmployeeRole", String.class);
+    }
+  }
+
+}
