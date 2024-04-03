@@ -24,14 +24,14 @@ CREATE TABLE `customer` (
 	`join_date`	DATE	NOT NULL
 );
 
-CREATE TABLE `emoloyee` (
+CREATE TABLE `employee` (
 	`employee_id`	INT	NOT NULL AUTO_INCREMENT,
 	`employee_name`	VARCHAR(10)	NOT NULL,
 	`employee_department`	VARCHAR(20)	NOT NULL,
 	`employee_grade`	VARCHAR(30)	NOT NULL,
 	`employee_login_id`	VARCHAR(20)	NOT NULL,
 	`employee_login_pw`	VARCHAR(30)	NOT NULL,
-	`empolyee_role` VARCHAR(15) NOT NULL,
+	`employee_role` VARCHAR(15) NOT NULL,
 	`recent_login`	DATETIME NOT NULL
 );
 
@@ -101,9 +101,9 @@ ALTER TABLE `customer` ADD CONSTRAINT `PK_CUSTOMER` PRIMARY KEY (
 	`customer_id`
 );
 
---ALTER TABLE `employee` ADD CONSTRAINT `PK_EMPLOYEE` PRIMARY KEY (
---	`employee_id`
---);
+ALTER TABLE `employee` ADD CONSTRAINT `PK_EMPLOYEE` PRIMARY KEY (
+	`employee_id`
+);
 
 ALTER TABLE `product` ADD CONSTRAINT `PK_PRODUCT` PRIMARY KEY (
 	`product_id`

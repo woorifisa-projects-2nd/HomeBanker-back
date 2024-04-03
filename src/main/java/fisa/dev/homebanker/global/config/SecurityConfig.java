@@ -29,14 +29,14 @@ public class SecurityConfig {
     return new BCryptPasswordEncoder();
   }
 
-  // ⭐️ CORS 설정
+  // CORS 설정
   CorsConfigurationSource corsConfigurationSource() {
     return request -> {
       CorsConfiguration config = new CorsConfiguration();
       config.setAllowedHeaders(Collections.singletonList("*"));
       config.setAllowedMethods(Collections.singletonList("*"));
       config.setAllowedOriginPatterns(
-          Collections.singletonList("http://localhost:3000")); // ⭐️ 허용할 origin
+          Collections.singletonList("http://localhost:3000")); // 허용할 origin
       config.setAllowCredentials(true);
       return config;
     };
@@ -65,7 +65,6 @@ public class SecurityConfig {
             )
         );
     return http.build();
+
   }
-
-
 }

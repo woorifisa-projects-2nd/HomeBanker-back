@@ -1,6 +1,6 @@
 package fisa.dev.homebanker.domain.login.service;
 
-import fisa.dev.homebanker.domain.login.dto.LoginRequest;
+import fisa.dev.homebanker.domain.login.dto.LoginRequestDTO;
 import fisa.dev.homebanker.domain.login.entity.Customer;
 import fisa.dev.homebanker.domain.login.repository.UserRepository;
 import jakarta.transaction.Transactional;
@@ -22,7 +22,7 @@ public class UserService {
    * 로그인 기능 화면에서 LoginRequest(loginId, loginPw)을 입력받아 loginId와 loginPw 일치하면 User return loginId가
    * 존재하지 않거나 loginPw 일치하지 않으면 null return
    */
-  public Customer login(LoginRequest req) {
+  public Customer login(LoginRequestDTO req) {
     Optional<Customer> optionalUser = userRepository.findByCustomerLoginId(req.getLoginId());
     // loginId와 일치하는 User가 없으면 null return
     if (optionalUser.isEmpty()) {

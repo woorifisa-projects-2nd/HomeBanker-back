@@ -1,6 +1,6 @@
 package fisa.dev.homebanker.domain.login.controller;
 
-import fisa.dev.homebanker.domain.login.dto.LoginRequest;
+import fisa.dev.homebanker.domain.login.dto.LoginRequestDTO;
 import fisa.dev.homebanker.domain.login.entity.Customer;
 import fisa.dev.homebanker.domain.login.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +21,7 @@ public class JwtLoginApiController {
 //  private String secretKey;
 
   @PostMapping("/login")
-  public String login(@RequestBody LoginRequest loginRequest) {
+  public String login(@RequestBody LoginRequestDTO loginRequest) {
     Customer user = userService.login(loginRequest);
 
     if (user == null) {
