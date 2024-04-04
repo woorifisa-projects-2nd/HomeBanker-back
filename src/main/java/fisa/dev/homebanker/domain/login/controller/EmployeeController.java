@@ -15,17 +15,23 @@ import org.springframework.web.bind.annotation.RestController;
 public class EmployeeController {
 
   private final EmployeeService employeeService;
+  private final JwtTokenUtil jwtTokenUtil;
 
   @PostMapping("/login")
   public String login(@RequestBody LoginRequestDTO loginRequest) {
     Employee employee = employeeService.login(loginRequest);
 
+    // 발급할 토큰 초기화
+    String token = "";
+
     if (employee == null) {
       return "Fail";
     }
 
-    return "Success";
+    // 로그인 성공하면 토큰을 발급
+    token = jwtTokenUtil.generateEmployeeToken(employee);
 
-
+    return token;
   }
+
 }

@@ -64,40 +64,21 @@ public class JwtTokenUtil {
     return claims;
   }
 
-  public String extractCustomerName(String token) {
+  public String extractUserName(String token) {
     final Claims claims = extractAllClaims(token);
     if (claims == null) {
       return null;
     } else {
-      return claims.get("CustomerLoginId", String.class);
+      return claims.get("UserName", String.class);
     }
   }
 
-  public String extractCustomerRole(String token) {
+  public String extractUserRole(String token) {
     final Claims claims = extractAllClaims(token);
     if (claims == null) {
       return null;
     } else {
-      return claims.get("CustomerRole", String.class);
+      return claims.get("UserRole", String.class);
     }
   }
-
-  public String extractEmployeeName(String token) {
-    final Claims claims = extractAllClaims(token);
-    if (claims == null) {
-      return null;
-    } else {
-      return claims.get("EmployeeLoginId", String.class);
-    }
-  }
-
-  public String extractEmployeeRole(String token) {
-    final Claims claims = extractAllClaims(token);
-    if (claims == null) {
-      return null;
-    } else {
-      return claims.get("EmployeeRole", String.class);
-    }
-  }
-
 }
