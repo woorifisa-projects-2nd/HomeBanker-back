@@ -41,6 +41,7 @@ public class Product {
   public ProductDTO toDto() {
     return ProductDTO.builder()
         .productId(productId)
+        .productName(productName)
         .productCode(productCode)
         .productDescription(productDescription)
         .productInterest(productInterest)
