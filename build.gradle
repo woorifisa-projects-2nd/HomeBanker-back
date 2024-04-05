@@ -41,6 +41,8 @@ dependencies {
 
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+    // openvidu
+    implementation 'io.openvidu:openvidu-java-client:2.29.0'
 
 }
 
