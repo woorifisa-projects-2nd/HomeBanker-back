@@ -24,6 +24,7 @@ public class CustomerService {
     String customerAddress = customerRegisterDTO.getCustomerAddress();
     String customerLoginId = customerRegisterDTO.getCustomerLoginId();
     String customerLoginPw = customerRegisterDTO.getCustomerLoginPw();
+    String customerRole = customerRegisterDTO.getCustomerRole();
     String customerIdentificationNum = customerRegisterDTO.getCustomerIdentificationNum();
     Date joinDate = customerRegisterDTO.getJoinDate();
 
@@ -34,7 +35,7 @@ public class CustomerService {
     customer.setCustomerAddress(customerAddress);
     customer.setCustomerLoginId(customerLoginId);
     customer.setCustomerLoginPw(bCryptPasswordEncoder.encode(customerLoginPw));
-    customer.setCustomerRole("CUSTOMER");
+    customer.setCustomerRole(customerRole);
     customer.setCustomerIdentificationNum(customerIdentificationNum);
     customer.setCustomerRecentLogin(null);
     customer.setJoinDate(joinDate);

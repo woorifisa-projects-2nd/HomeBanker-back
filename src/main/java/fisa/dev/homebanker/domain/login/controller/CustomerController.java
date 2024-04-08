@@ -5,6 +5,7 @@ import fisa.dev.homebanker.domain.login.entity.Customer;
 import fisa.dev.homebanker.domain.login.jwt.JwtUtil;
 import fisa.dev.homebanker.domain.login.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -38,5 +39,10 @@ public class CustomerController {
   public Customer register(@RequestBody CustomerRegisterDTO customerRegisterDTO) {
     Customer customer = customerService.register(customerRegisterDTO);
     return customer;
+  }
+
+  @GetMapping("/admin")
+  public String adminPage() {
+    return "admin page";
   }
 }

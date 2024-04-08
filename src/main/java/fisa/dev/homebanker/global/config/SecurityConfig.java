@@ -1,5 +1,6 @@
 package fisa.dev.homebanker.global.config;
 
+import fisa.dev.homebanker.domain.login.jwt.JwtFilter;
 import fisa.dev.homebanker.domain.login.jwt.JwtUtil;
 import fisa.dev.homebanker.domain.login.jwt.LoginFilter;
 import lombok.RequiredArgsConstructor;
@@ -57,13 +58,15 @@ public class SecurityConfig {
 
         .authorizeHttpRequests((auth) -> auth
             .requestMatchers("/h2-console/**").permitAll()
-            .requestMatchers("/**").permitAll()
-            .requestMatchers("/login", "/", "/join").permitAll()
+//            .requestMatchers("/**").permitAll()
+            .requestMatchers("/login", "/", "/register").permitAll()
             .requestMatchers("/admin").hasRole("ADMIN")
             .anyRequest().authenticated())
 
         .sessionManagement((session) -> session
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+
+        .addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class)
 
         .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
             UsernamePasswordAuthenticationFilter.class)
