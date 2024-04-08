@@ -18,10 +18,10 @@ CREATE TABLE `customer` (
 	`customer_phone`	VARCHAR(11)	NOT NULL,
 	`customer_address`	VARCHAR(50)	NOT NULL,
 	`customer_login_id`	VARCHAR(20)	NOT NULL,
-	`customer_login_pw`	VARCHAR(30)	NOT NULL,
+	`customer_login_pw`	VARCHAR(100)	NOT NULL,
 	`customer_role` VARCHAR(15) NOT NULL,
 	`customer_identification_num`	VARCHAR(200)	NOT NULL,
-	`customer_recent_login`	DATETIME	NOT NULL,
+	`customer_recent_login`	DATETIME,
 	`join_date`	DATE	NOT NULL
 );
 
@@ -31,7 +31,7 @@ CREATE TABLE `employee` (
 	`employee_department`	VARCHAR(20)	NOT NULL,
 	`employee_grade`	VARCHAR(30)	NOT NULL,
 	`employee_login_id`	VARCHAR(20)	NOT NULL,
-	`employee_login_pw`	VARCHAR(30)	NOT NULL,
+	`employee_login_pw`	VARCHAR(100)	NOT NULL,
 	`employee_role` VARCHAR(15) NOT NULL,
 	`recent_login`	DATETIME NOT NULL
 );
