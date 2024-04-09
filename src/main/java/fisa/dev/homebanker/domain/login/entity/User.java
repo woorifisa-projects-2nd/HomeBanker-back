@@ -20,39 +20,39 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "customer")
-public class Customer {
+@Table(name="users")
+public class User {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int customerId;
+  private int id;
 
   @Column(nullable = false)
-  private String customerName;
+  private String name;
 
   @Column(nullable = false)
-  private Date customerBirth;
+  private Date birth;
 
   @Column(nullable = false)
-  private String customerPhone;
+  private String phone;
 
   @Column(nullable = false)
-  private String customerAddress;
+  private String address;
 
   @Column(nullable = false)
-  private String customerLoginId;
+  private String loginId;
 
   @Column(nullable = false)
-  private String customerLoginPw;
+  private String loginPw;
 
   @Column(nullable = false)
-  private String customerRole;
+  private String role;
 
   @Column(nullable = false)
-  private String customerIdentificationNum;
+  private String identificationNum;
 
   @Column(nullable = false)
-  private LocalDateTime customerRecentLogin;
+  private LocalDateTime recentLogin;
 
   @Column(nullable = false)
   private Date joinDate;

@@ -23,11 +23,10 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
   @Override
   public Authentication attemptAuthentication(
       HttpServletRequest request, HttpServletResponse response) {
-//    System.out.println("안녕하세요 시작합니다.");
+
     //클라이언트 요청에서 username, password 추출
     String loginId = obtainLoginId(request);
     String loginPw = obtainLoginPw(request);
-//    System.out.println("loginId = " + loginId);
     System.out.println("loginPw = " + loginPw);
 
     //스프링 시큐리티에서 username과 password를 검증하기 위해서는 token에 담아야 함
@@ -71,11 +70,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
   @Override
   protected void unsuccessfulAuthentication(HttpServletRequest request,
       HttpServletResponse response, AuthenticationException failed) {
-//    String pw = "pw";
-//    BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-//    String bcryptPw = passwordEncoder.encode(pw);
-//    System.out.println(bcryptPw);
-    System.out.println("unsuccessfulAuthentication 함수 호출");
     response.setStatus(401);
   }
 }

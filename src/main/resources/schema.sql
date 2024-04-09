@@ -1,4 +1,4 @@
-DROP TABLE customer IF EXISTS;
+DROP TABLE users IF EXISTS;
 -- DROP TABLE employee IF EXISTS;
 -- DROP TABLE product IF EXISTS;
 -- DROP TABLE sale IF EXISTS;
@@ -11,17 +11,17 @@ DROP TABLE customer IF EXISTS;
 -- DROP TABLE customer_log IF EXISTS;
 
 
-CREATE TABLE `customer` (
-	`customer_id`	INT	NOT NULL AUTO_INCREMENT,
-	`customer_name`	VARCHAR(10)	NOT NULL,
-	`customer_birth`	DATE	NOT NULL,
-	`customer_phone`	VARCHAR(11)	NOT NULL,
-	`customer_address`	VARCHAR(50)	NOT NULL,
-	`customer_login_id`	VARCHAR(20)	NOT NULL,
-	`customer_login_pw`	VARCHAR(100)	NOT NULL,
-	`customer_role` VARCHAR(15) NOT NULL,
-	`customer_identification_num`	VARCHAR(200)	NOT NULL,
-	`customer_recent_login`	DATETIME,
+CREATE TABLE `users` (
+	`id`	INT	NOT NULL AUTO_INCREMENT,
+	`name`	VARCHAR(10)	NOT NULL,
+	`birth`	DATE	NOT NULL,
+	`phone`	VARCHAR(11)	NOT NULL,
+	`address`	VARCHAR(50)	NOT NULL,
+	`login_id`	VARCHAR(20)	NOT NULL,
+	`login_pw`	VARCHAR(100)	NOT NULL,
+	`role` VARCHAR(15) NOT NULL,
+	`identification_num`	VARCHAR(200)	NOT NULL,
+	`recent_login`	DATETIME,
 	`join_date`	DATE	NOT NULL
 );
 
@@ -98,7 +98,7 @@ CREATE TABLE `customer` (
 -- -- 	`employee_id`	INT	NOT NULL
 -- -- );
 --
--- ALTER TABLE `customer` ADD CONSTRAINT `PK_CUSTOMER` PRIMARY KEY (
+-- ALTER TABLE `user` ADD CONSTRAINT `PK_CUSTOMER` PRIMARY KEY (
 -- 	`customer_id`
 -- );
 --
