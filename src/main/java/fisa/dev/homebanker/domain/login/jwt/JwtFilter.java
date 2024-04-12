@@ -27,7 +27,6 @@ public class JwtFilter extends OncePerRequestFilter {
     // Authorization 헤더 검증
     if (authorization == null || !authorization.startsWith("Bearer ")) {
 
-      System.out.println("token null");
       filterChain.doFilter(request, response);
 
       return;
@@ -38,7 +37,7 @@ public class JwtFilter extends OncePerRequestFilter {
     // 토큰 소멸 시간 검증
     if (jwtUtil.isExpired(token)) {
 
-      System.out.println("token expired");
+      System.out.println("Token Expired");
       filterChain.doFilter(request, response);
 
       return;
@@ -53,7 +52,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
     // JWT가 유효하다면 사용자가 누구인지 이미 알고 있는 상태이며, 추가적인 비밀번호 검증은 필요하지 않음
     // 비밀번호 검증을 건너뛰고 사용자의 식별 정보만을 사용하기 위함
-
     user.setLoginPw("temp");
     user.setRole(role);
 

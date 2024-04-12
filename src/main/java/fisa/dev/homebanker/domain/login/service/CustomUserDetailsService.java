@@ -20,10 +20,10 @@ public class CustomUserDetailsService implements UserDetailsService {
     User user = userRepository.findByLoginId(loginId);
 
     if (user != null) {
-      System.out.println("customerLoginId가 동일한 사람 있음");
+      System.out.println("로그인 정보와 일치하는 계정이 존재합니다.");
       return new CustomUserDetails(user);
     }
-    System.out.println("아이디가 다름");
+    System.out.println("계정이 존재하지 않습니다.");
     return null;
   }
 }
