@@ -1,8 +1,11 @@
 package fisa.dev.homebanker.global.config;
 
+//import fisa.dev.homebanker.domain.login.jwt.CustomLogoutFilter;
 import fisa.dev.homebanker.domain.login.jwt.JwtFilter;
 import fisa.dev.homebanker.domain.login.jwt.JwtUtil;
 import fisa.dev.homebanker.domain.login.jwt.LoginFilter;
+import jakarta.servlet.http.HttpServletRequest;
+import java.util.Collections;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
 
 @Configuration
 //@EnableWebSecurity(debug = true)
@@ -36,19 +41,6 @@ public class SecurityConfig {
     return new BCryptPasswordEncoder();
   }
 
-  // CORS 설정
-//  CorsConfigurationSource corsConfigurationSource() {
-//    return request -> {
-//      CorsConfiguration config = new CorsConfiguration();
-//      config.setAllowedHeaders(Collections.singletonList("*"));
-//      config.setAllowedMethods(Collections.singletonList("*"));
-//      config.setAllowedOriginPatterns(
-//          Collections.singletonList("http://localhost:3000")); // 허용할 origin
-//      config.setAllowCredentials(true);
-//      return config;
-//    };
-//  }
-
   @Bean
   public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
@@ -56,10 +48,28 @@ public class SecurityConfig {
         .formLogin(auth -> auth.disable())
         .httpBasic(auth -> auth.disable())
 
+        .cors((cors) -> cors.configurationSource(new CorsConfigurationSource() {
+          @Override
+          public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+            CorsConfiguration configuration = new CorsConfiguration();
+
+            configuration.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
+            configuration.setAllowedMethods(Collections.singletonList("*"));
+            configuration.setAllowCredentials(true);
+            configuration.setAllowedHeaders(Collections.singletonList("*"));
+            configuration.setMaxAge(3600L);
+
+            configuration.setExposedHeaders(Collections.singletonList("Authorization"));
+
+            return configuration;
+          }
+        }))
+
         .authorizeHttpRequests((auth) -> auth
             .requestMatchers("/h2-console/**").permitAll()
             .requestMatchers("/login", "/", "/register").permitAll()
-            .requestMatchers("/admin").hasRole("ADMIN")
+            .requestMatchers("/api/board").hasRole("ADMIN")
+            .requestMatchers("/api/banker/board").hasRole("BANKER")
             .anyRequest().authenticated())
 
         .sessionManagement((session) -> session
@@ -69,6 +79,8 @@ public class SecurityConfig {
 
         .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
             UsernamePasswordAuthenticationFilter.class)
+
+//        .addFilterBefore(new CustomLogoutFilter(jwtUtil), LogoutFilter.class)
 
         .headers((headerConfig) ->
             headerConfig.frameOptions(frameOptionsConfig ->

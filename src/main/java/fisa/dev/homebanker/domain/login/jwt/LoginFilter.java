@@ -62,7 +62,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     String role = auth.getAuthority();
 
     // JwtUtil에 token을 만들어달라고 전달
-    String token = jwtUtil.createJwt(loginId, role, 60 * 60 * 10L);
+    String token = jwtUtil.createJwt(loginId, role, 60 * 60 * 24L);
     response.addHeader("Authorization", "Bearer " + token);
   }
 
@@ -70,6 +70,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
   @Override
   protected void unsuccessfulAuthentication(HttpServletRequest request,
       HttpServletResponse response, AuthenticationException failed) {
+    System.out.println("unsuccessfulAuthentication 호출");
     response.setStatus(401);
   }
 }

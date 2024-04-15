@@ -22,8 +22,4 @@ public class UserController {
     return user;
   }
 
-  @GetMapping("/admin")
-  public String adminPage() {
-    return "admin page";
-  }
 }
