@@ -67,9 +67,8 @@ public class SecurityConfig {
 
         .authorizeHttpRequests((auth) -> auth
             .requestMatchers("/h2-console/**").permitAll()
-            .requestMatchers("/login", "/", "/register").permitAll()
-            .requestMatchers("/api/board").hasRole("ADMIN")
-            .requestMatchers("/api/banker/board").hasRole("BANKER")
+            .requestMatchers("/", "/register", "/login", "/api/board/**").permitAll()
+            .requestMatchers("/api/banker/**").hasAnyRole("ADMIN", "BANKER")
             .anyRequest().authenticated())
 
         .sessionManagement((session) -> session
@@ -79,8 +78,6 @@ public class SecurityConfig {
 
         .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
             UsernamePasswordAuthenticationFilter.class)
-
-//        .addFilterBefore(new CustomLogoutFilter(jwtUtil), LogoutFilter.class)
 
         .headers((headerConfig) ->
             headerConfig.frameOptions(frameOptionsConfig ->

@@ -28,8 +28,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
     //Authorization 헤더 검증
     if (authorization == null || !authorization.startsWith("Bearer ")) {
-
       System.out.println("token null");
+
       filterChain.doFilter(request, response);
 
       //현재 filterchain에서의 처리가 종료되면 종료
@@ -46,7 +46,6 @@ public class JwtFilter extends OncePerRequestFilter {
 
       return;
     }
-
     // 토큰에서 loginId와 role 가져오기
     String loginId = jwtUtil.getLoginId(token);
     String role = jwtUtil.getRole(token);
@@ -65,10 +64,6 @@ public class JwtFilter extends OncePerRequestFilter {
     //스프링 시큐리티 인증 토큰 생성
     Authentication authToken = new UsernamePasswordAuthenticationToken(userDetails, null,
         userDetails.getAuthorities());
-
-    System.out.println(authToken);
-
-    //지금 요청에 대해 user 세션을 생성
     SecurityContextHolder.getContext().setAuthentication(authToken);
 
     filterChain.doFilter(request, response);
