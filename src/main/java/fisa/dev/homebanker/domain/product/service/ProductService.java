@@ -16,6 +16,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +37,7 @@ public class ProductService {
     }
     ProductListDTO productListDTO = new ProductListDTO();
 
-    Pageable pageable = PageRequest.of(page, size);
+    Pageable pageable = PageRequest.of(page, size, Direction.ASC, "productName");
     Page<Product> foundPage;
     if (category.equals("all")) {
       foundPage = productRepository.findAll(pageable);
