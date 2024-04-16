@@ -8,7 +8,6 @@ import io.openvidu.java.client.OpenViduJavaClientException;
 import io.openvidu.java.client.Session;
 import io.openvidu.java.client.SessionProperties;
 import jakarta.annotation.PostConstruct;
-import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import org.springframework.beans.factory.annotation.Value;
@@ -74,18 +73,9 @@ public class OpenviduController {
   }
 
   @PostMapping("/api/sessions/{sessionId}/destroy")
-  public ResponseEntity<Connection> destroyConnection(@PathVariable("sessionId") String sessionId)
+  public ResponseEntity destroyConnection(@PathVariable("sessionId") String sessionId)
       throws OpenViduJavaClientException, OpenViduHttpException {
     sessionMap.remove(sessionId);
-
-    Session activeSession = openvidu.getActiveSession(sessionId);
-
-    List<Connection> activeConnections = activeSession.getActiveConnections();
-    Connection connection = null;
-    for (int i = 0; i < activeConnections.size(); i++) {
-      connection = activeConnections.get(i);
-    }
-
-    return new ResponseEntity<>(connection, HttpStatus.OK);
+    return new ResponseEntity<>(HttpStatus.OK);
   }
 }
