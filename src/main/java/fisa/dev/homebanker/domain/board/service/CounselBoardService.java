@@ -7,6 +7,8 @@ import fisa.dev.homebanker.domain.board.entity.CounselBoard;
 import fisa.dev.homebanker.domain.board.exception.CounselBoardException;
 import fisa.dev.homebanker.domain.board.exception.CounselBoardExceptionEnum;
 import fisa.dev.homebanker.domain.board.repository.CounselBoardRepository;
+import fisa.dev.homebanker.domain.login.entity.User;
+import fisa.dev.homebanker.domain.login.repository.UserRepository;
 import fisa.dev.homebanker.global.util.pagination.PaginationResMaker;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,8 +25,9 @@ public class CounselBoardService {
 
   private final CounselBoardRepository counselBoardRepository;
   private final PaginationResMaker paginationResMaker;
+  private final UserRepository userRepository;
 
-  public CounselBoardListDTO readAllCounselBoards(Integer page, Integer size) {
+  public CounselBoardListDTO readAllCounselBoards(Integer page, Integer size, String loginId) {
     if (page < 0) {
       throw new CounselBoardException(CounselBoardExceptionEnum.C002);
     }
@@ -32,7 +35,15 @@ public class CounselBoardService {
       throw new CounselBoardException(CounselBoardExceptionEnum.C003);
     }
     Pageable pageable = PageRequest.of(page, size, Direction.ASC, "createdAt");
-    Page<CounselBoard> foundPage = counselBoardRepository.findAll(pageable);
+
+    User user = userRepository.findByLoginId(loginId);
+
+    Page<CounselBoard> foundPage;
+    if (user.getRole().equals("ROLE_ADMIN")) {
+      foundPage = counselBoardRepository.findAll(pageable);
+    } else {
+      foundPage = counselBoardRepository.findByCustomerId(user.getId(), pageable);
+    }
 
     CounselBoardListDTO counselBoardListDTO = new CounselBoardListDTO();
     counselBoardListDTO.setPagination(paginationResMaker.makePaginationDto(foundPage)); //페이지네이션 세팅
@@ -54,10 +65,12 @@ public class CounselBoardService {
   }
 
 
-  public void addCounselBoard(CounselBoardContentDTO contentDTO) {
+  public void addCounselBoard(CounselBoardContentDTO contentDTO, String loginId) {
+    User customer = userRepository.findByLoginId(loginId);
     String content = contentDTO.getContent();
     CounselBoard board = CounselBoard.builder()
         .reply("N")
+        .customer(customer)
         .content(content)
         .createdAt(LocalDateTime.now())
         .build();

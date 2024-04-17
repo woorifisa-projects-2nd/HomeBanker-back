@@ -1,11 +1,15 @@
 package fisa.dev.homebanker.domain.board.entity;
 
+import fisa.dev.homebanker.domain.board.dto.BankerDTO;
 import fisa.dev.homebanker.domain.board.dto.CounselBoardDTO;
+import fisa.dev.homebanker.domain.login.entity.User;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
@@ -25,7 +29,14 @@ public class CounselBoard {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long boardId;
 
-  //FK 설정 추가해야함.
+  @JoinColumn(nullable = false)
+  @ManyToOne
+  private User customer;
+
+  private Integer bankerId;
+
+  @Column(length = 10)
+  private String bankerName;
 
   @Column(length = 500, nullable = false)
   private String content;
@@ -42,12 +53,13 @@ public class CounselBoard {
 
   public CounselBoardDTO toDto() {
     return CounselBoardDTO.builder()
-        //.customerId()
-        //.customerName()
+        .customerId(Long.valueOf(customer.getId()))
+        .customerName(customer.getName())
+        .banker(new BankerDTO(bankerId, bankerName))
         .boardId(boardId)
         .content(content)
         .replyYN(reply)
-        //.telephone()
+        .telephone(customer.getPhone())
         .createdAt(createdAt)
         .updatedAt(updatedAt)
         .build();
@@ -59,5 +71,13 @@ public class CounselBoard {
 
   public void setUpdatedAt(LocalDateTime updatedAt) {
     this.updatedAt = updatedAt;
+  }
+
+  public void setBankerId(Integer bankerId) {
+    this.bankerId = bankerId;
+  }
+
+  public void setBankerName(String bankerName) {
+    this.bankerName = bankerName;
   }
 }
