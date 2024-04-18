@@ -35,7 +35,7 @@ CREATE TABLE `product` (
 
 CREATE TABLE `sale` (
                         `sale_id`	BIGINT	NOT NULL AUTO_INCREMENT,
-                        `banker_id`	INT	NOT NULL,
+                        `banker_id`	    INT	NOT NULL,
                         `customer_id`	INT	NOT NULL,
                         `product_id`	INT	NOT NULL,
                         `created_at`	DATETIME NOT NULL,

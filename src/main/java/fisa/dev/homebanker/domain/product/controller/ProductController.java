@@ -2,6 +2,8 @@ package fisa.dev.homebanker.domain.product.controller;
 
 import fisa.dev.homebanker.domain.product.dto.ChangeVisibilityDTO;
 import fisa.dev.homebanker.domain.product.dto.ProductListDTO;
+import fisa.dev.homebanker.domain.product.dto.SaleDTO;
+import fisa.dev.homebanker.domain.product.entity.Sale;
 import fisa.dev.homebanker.domain.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -48,5 +50,8 @@ public class ProductController {
     return ResponseEntity.ok(productService.changeVisibility(dto));
   }
 
-
+  @PostMapping("/register")
+  public Sale registerProduct(@RequestBody SaleDTO dto) {
+    return productService.registerProduct(dto);
+  }
 }

@@ -1,14 +1,22 @@
 package fisa.dev.homebanker.domain.product.service;
 
+import fisa.dev.homebanker.domain.login.entity.User;
+import fisa.dev.homebanker.domain.login.exception.UserException;
+import fisa.dev.homebanker.domain.login.exception.UserExceptionEnum;
+import fisa.dev.homebanker.domain.login.repository.UserRepository;
 import fisa.dev.homebanker.domain.product.dto.ChangeVisibilityDTO;
 import fisa.dev.homebanker.domain.product.dto.ProductDTO;
 import fisa.dev.homebanker.domain.product.dto.ProductListDTO;
+import fisa.dev.homebanker.domain.product.dto.SaleDTO;
 import fisa.dev.homebanker.domain.product.entity.Product;
 import fisa.dev.homebanker.domain.product.entity.ProductType;
+import fisa.dev.homebanker.domain.product.entity.Sale;
 import fisa.dev.homebanker.domain.product.exception.ProductException;
 import fisa.dev.homebanker.domain.product.exception.ProductionExceptionEnum;
 import fisa.dev.homebanker.domain.product.repository.ProductRepository;
+import fisa.dev.homebanker.domain.product.repository.SaleRepository;
 import fisa.dev.homebanker.global.util.pagination.PaginationResMaker;
+import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -24,8 +32,9 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class ProductService {
-
+  private final UserRepository userRepository;
   private final ProductRepository productRepository;
+  private final SaleRepository saleRepository;
   private final PaginationResMaker paginationResMaker;
 
   public ProductListDTO findAllProducts(String category, Integer size, Integer page) {
@@ -86,5 +95,20 @@ public class ProductService {
     }
   }
 
-
+  public Sale registerProduct(SaleDTO saleDTO) {
+    User customer = userRepository.findById(saleDTO.getCustomerId())
+        .orElseThrow(() -> new UserException(UserExceptionEnum.P001));
+    User banker = userRepository.findById(saleDTO.getBankerId())
+        .orElseThrow(() -> new UserException(UserExceptionEnum.P002));
+    Product product = productRepository.findById(saleDTO.getProductId())
+        .orElseThrow(() -> new ProductException(ProductionExceptionEnum.P001));
+    return saleRepository.save(Sale.builder()
+        .customerId(customer)
+        .bankerId(banker)
+        .productId(product)
+        .createdAt(LocalDateTime.now())
+        .saleMonth(saleDTO.getSaleMonth())
+        .saleAmount(saleDTO.getSaleAmount())
+        .build());
+  }
 }

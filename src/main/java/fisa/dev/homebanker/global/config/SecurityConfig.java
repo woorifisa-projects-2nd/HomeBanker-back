@@ -65,7 +65,7 @@ public class SecurityConfig {
 
         .authorizeHttpRequests((auth) -> auth
             .requestMatchers("/h2-console/**").permitAll()
-            .requestMatchers("/", "/register", "/login", "/api/board/**").permitAll()
+            .requestMatchers("/", "/register", "/login", "/api/board/**", "/error", "/api/banker/**").permitAll()
             .requestMatchers("/api/banker/**").hasAnyRole("ADMIN", "BANKER")
             .anyRequest().authenticated())
 
