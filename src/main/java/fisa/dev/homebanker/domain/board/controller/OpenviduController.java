@@ -32,11 +32,21 @@ public class OpenviduController {
 
   private OpenVidu openvidu;
 
-  private static Map<String, Integer> sessionMap = new ConcurrentHashMap<String, Integer>();
+  private static Map<String, boolean[]> sessionMap = new ConcurrentHashMap<>();
 
   @PostConstruct
   public void init() {
     this.openvidu = new OpenVidu(OPENVIDU_URL, OPENVIDU_SECRET);
+  }
+
+
+  private String checkEntrance(boolean[] entrance, int idx) {
+    if (entrance[idx] == false) {
+      entrance[idx] = true;
+      return "success";
+    } else {
+      return "full";
+    }
   }
 
   @PostMapping("/api/sessions")
@@ -44,12 +54,30 @@ public class OpenviduController {
       @RequestBody(required = false) Map<String, Object> params)
       throws OpenViduJavaClientException, OpenViduHttpException {
     String sessionId = String.valueOf(params.get("customSessionId"));
-    Integer cnt = sessionMap.get(sessionId);
+    String role = String.valueOf(params.get("role"));
+    boolean[] entrance = sessionMap.get(sessionId); // [0] : customer, [1] : banker
+    String result = "success";
 
-    if (cnt != null && cnt >= 2) {
+    if (entrance != null && entrance[0] == true && entrance[1] == true) {
+      result = "full";
+    } else if (entrance != null) { //한명만 입장한 세션
+      if (role.equals("ROLE_CUSTOMER")) { //고객이 입장
+        result = checkEntrance(entrance, 0);
+      } else { //은행원이 입장
+        result = checkEntrance(entrance, 1);
+      }
+    } else { //아무도 입장하지 않은 세션
+      sessionMap.put(sessionId, new boolean[2]);
+      if (role.equals("ROLE_CUSTOMER")) {
+        sessionMap.get(sessionId)[0] = true;
+      } else {
+        sessionMap.get(sessionId)[1] = true;
+      }
+    }
+
+    System.out.println("result = " + result);
+    if (result.equals("full")) {
       return new ResponseEntity<>("full", HttpStatus.OK);
-    } else {
-      sessionMap.put(sessionId, sessionMap.getOrDefault(sessionId, 0) + 1);
     }
 
     SessionProperties properties = SessionProperties.fromJson(params).build();
