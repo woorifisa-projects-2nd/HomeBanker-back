@@ -14,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,7 +31,7 @@ public class CounselBoardService {
     if (size <= 0) {
       throw new CounselBoardException(CounselBoardExceptionEnum.C003);
     }
-    Pageable pageable = PageRequest.of(page, size);
+    Pageable pageable = PageRequest.of(page, size, Direction.ASC, "createdAt");
     Page<CounselBoard> foundPage = counselBoardRepository.findAll(pageable);
 
     CounselBoardListDTO counselBoardListDTO = new CounselBoardListDTO();
@@ -59,7 +60,6 @@ public class CounselBoardService {
         .reply("N")
         .content(content)
         .createdAt(LocalDateTime.now())
-        .updatedAt(LocalDateTime.now())
         .build();
     counselBoardRepository.save(board);
   }
