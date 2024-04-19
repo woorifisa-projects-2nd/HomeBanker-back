@@ -1,3 +1,11 @@
+INSERT INTO USERS (name, birth, phone, address, login_id, login_pw, role, identification_num, join_date) VALUES
+    ('조유정', '1996-12-22', '01063822741', '서울', 'id', '$2a$10$lBV.lzUehu2BqtPNzccAdetTX.gFSGwwMstNNZ/qt4lyk68cwVmhC', 'ROLE_CUSTOMER',
+     '961222-2222222', '2024-04-16');
+
+INSERT INTO USERS (name, birth, phone, address, login_id, login_pw, role, identification_num, join_date) VALUES
+    ('은행원', '1998-04-20', '01086249375', '서울', 'admin', '$2a$10$lBV.lzUehu2BqtPNzccAdetTX.gFSGwwMstNNZ/qt4lyk68cwVmhC', 'ROLE_ADMIN',
+     '980420-2222222', '2024-04-16');
+
 INSERT INTO board (content, reply_YN, created_at) VALUES ('안녕', 'F', '2024-12-12 09:09:10');
 INSERT INTO board (content, reply_YN, created_at) VALUES ('빠밤', 'F', '2023-12-12 09:09:10');
 INSERT INTO board (content, reply_YN, created_at) VALUES ('음식', 'F', '2024-11-12 09:09:10');
