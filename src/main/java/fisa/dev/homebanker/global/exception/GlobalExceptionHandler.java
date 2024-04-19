@@ -1,6 +1,7 @@
 package fisa.dev.homebanker.global.exception;
 
 import fisa.dev.homebanker.domain.board.exception.CounselBoardException;
+import fisa.dev.homebanker.domain.login.exception.UserException;
 import fisa.dev.homebanker.domain.product.exception.ProductException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +21,11 @@ public class GlobalExceptionHandler {
     return new ResponseEntity(response, response.getStatus());
   }
 
+  @ExceptionHandler(UserException.class)
+  public ResponseEntity<ExceptionResponse> userException(UserException e) {
+    ExceptionResponse response = new ExceptionResponse(e.getMsg(), e.getStatus());
+    return new ResponseEntity(response, response.getStatus());
+  }
   @ExceptionHandler(HttpMessageNotReadableException.class)
   public ResponseEntity<ExceptionResponse> JsonParseException(HttpMessageNotReadableException e) {
     String msg = String.format("입력하신 값이 자료형에 맞지 않습니다.");

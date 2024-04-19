@@ -49,9 +49,4 @@ public class ProductController {
       @RequestBody @Validated ChangeVisibilityDTO dto) {
     return ResponseEntity.ok(productService.changeVisibility(dto));
   }
-
-  @PostMapping("/register")
-  public Sale registerProduct(@RequestBody SaleDTO dto) {
-    return productService.registerProduct(dto);
-  }
 }
