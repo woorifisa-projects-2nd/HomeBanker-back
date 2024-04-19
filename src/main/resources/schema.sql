@@ -10,21 +10,21 @@ DROP TABLE customer_log IF EXISTS;
 
 
 CREATE TABLE `users` (
-                            `id`	INT	NOT NULL AUTO_INCREMENT,
-                            `name`	VARCHAR(10)	NOT NULL,
-                            `birth`	DATE	NOT NULL,
-                            `phone`	VARCHAR(11)	NOT NULL,
-                            `address`	VARCHAR(50)	NOT NULL,
-                            `login_id`	VARCHAR(10)	NOT NULL,
-                            `login_pw`	VARCHAR(100)	NOT NULL,
-                            `role` VARCHAR(15)	NOT NULL,
-                            `identification_num`	VARCHAR(256)	NOT NULL,
-                            `recent_login`	DATETIME	NULL,
-                            `join_date`	DATE	NOT NULL
+                         `id`	INT	NOT NULL AUTO_INCREMENT,
+                         `name`	VARCHAR(10)	NOT NULL,
+                         `birth`	DATE	NOT NULL,
+                         `phone`	VARCHAR(11)	NOT NULL,
+                         `address`	VARCHAR(50)	NOT NULL,
+                         `login_id`	VARCHAR(10)	NOT NULL,
+                         `login_pw`	VARCHAR(100)	NOT NULL,
+                         `role` VARCHAR(15)	NOT NULL,
+                         `identification_num`	VARCHAR(256)	NOT NULL,
+                         `recent_login`	DATETIME	NULL,
+                         `join_date`	DATE	NOT NULL
 );
 
 CREATE TABLE `product` (
-                           `product_id`	INT	NOT NULL AUTO_INCREMENT,
+                           `product_id`	BIGINT	NOT NULL AUTO_INCREMENT,
                            `product_code`	VARCHAR(30)	NOT NULL,
                            `product_name`	VARCHAR(255) NOT NULL,
                            `product_description`	VARCHAR(100) NOT NULL,
@@ -35,9 +35,9 @@ CREATE TABLE `product` (
 
 CREATE TABLE `sale` (
                         `sale_id`	BIGINT	NOT NULL AUTO_INCREMENT,
-                        `banker_id`	INT	NOT NULL,
+                        `banker_id`	    INT	NOT NULL,
                         `customer_id`	INT	NOT NULL,
-                        `product_id`	INT	NOT NULL,
+                        `product_id`	BIGINT	NOT NULL,
                         `created_at`	DATETIME NOT NULL,
                         `sale_month`	INT	NULL,
                         `sale_amount`	INT	NULL
@@ -47,6 +47,7 @@ CREATE TABLE `board` (
                          `board_id`	BIGINT	NOT NULL AUTO_INCREMENT,
                          `customer_id`	INT	NULL,
                          `banker_id`	INT	NULL,
+                         `banker_name` VARCHAR(10) NULL,
                          `content`	VARCHAR(500) NOT NULL,
                          `reply_YN`	VARCHAR(10)	NOT NULL,
                          `created_at`	DATETIME	NOT NULL,
@@ -86,7 +87,7 @@ CREATE TABLE `banker_log` (
 );
 
 ALTER TABLE `users` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
-                                                                 `id`
+                                                          `id`
     );
 
 ALTER TABLE `product` ADD CONSTRAINT `PK_PRODUCT` PRIMARY KEY (
@@ -119,3 +120,5 @@ ALTER TABLE `customer_log` ADD CONSTRAINT `PK_CUSTOMER_LOG` PRIMARY KEY (
 ALTER TABLE `banker_log` ADD CONSTRAINT `PK_BANKER_LOG` PRIMARY KEY (
                                                                      `log_id`
     );
+
+ALTER TABLE `board` ADD CONSTRAINT `FK_BOARD_USER` FOREIGN KEY (customer_id) REFERENCES `Users` (id);
