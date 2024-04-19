@@ -75,7 +75,6 @@ public class OpenviduController {
       }
     }
 
-    System.out.println("result = " + result);
     if (result.equals("full")) {
       return new ResponseEntity<>("full", HttpStatus.OK);
     }
