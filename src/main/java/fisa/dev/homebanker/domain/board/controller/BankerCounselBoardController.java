@@ -2,6 +2,7 @@ package fisa.dev.homebanker.domain.board.controller;
 
 import fisa.dev.homebanker.domain.board.service.BankerCounselBoardService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -32,7 +33,8 @@ public class BankerCounselBoardController {
    */
   @PutMapping("/{boardId}")
   public void updateReply(@PathVariable Long boardId) {
-    bankerCounselBoardService.updateReply(boardId);
+    String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
+    bankerCounselBoardService.updateReply(boardId, loginId);
   }
 
 }

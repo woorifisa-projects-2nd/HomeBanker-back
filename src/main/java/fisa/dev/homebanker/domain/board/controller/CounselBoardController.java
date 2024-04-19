@@ -6,6 +6,7 @@ import fisa.dev.homebanker.domain.board.dto.CounselBoardListDTO;
 import fisa.dev.homebanker.domain.board.service.CounselBoardService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,7 +24,7 @@ public class CounselBoardController {
   private final CounselBoardService counselBoardService;
 
   /**
-   * 전체 상담 게시글 조회
+   * 전체 상담 게시글 조회 (자신이 쓴 글만)
    *
    * @param size 페이지 크기
    * @param page 페이지 번호
@@ -32,7 +33,8 @@ public class CounselBoardController {
   @GetMapping("")
   public ResponseEntity<CounselBoardListDTO> readAllCounselBoards(@RequestParam Integer size,
       @RequestParam Integer page) {
-    CounselBoardListDTO response = counselBoardService.readAllCounselBoards(page, size);
+    String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
+    CounselBoardListDTO response = counselBoardService.readAllCounselBoards(page, size, loginId);
     return ResponseEntity.ok(response);
   }
 
@@ -55,7 +57,8 @@ public class CounselBoardController {
    */
   @PostMapping("")
   public void addCounselBoard(@RequestBody @Validated CounselBoardContentDTO contentDTO) {
-    counselBoardService.addCounselBoard(contentDTO);
+    String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
+    counselBoardService.addCounselBoard(contentDTO, loginId);
   }
 
 }
