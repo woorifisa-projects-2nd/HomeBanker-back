@@ -40,6 +40,7 @@ public class UserService {
         .build());
   }
 
+<<<<<<< Updated upstream
   public MyPageDTO readMyPage() {
     String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
     User customer = userRepository.findByLoginId(loginId);
@@ -69,5 +70,10 @@ public class UserService {
         .phone(customer.getPhone())
         .address(customer.getAddress())
         .build();
+=======
+  public String findRoleByLoginId(String loginId) {
+    return (userRepository.findByLoginId(loginId)).getRole();
+
+>>>>>>> Stashed changes
   }
 }
