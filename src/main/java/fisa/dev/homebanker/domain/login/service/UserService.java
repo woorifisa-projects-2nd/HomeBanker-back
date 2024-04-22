@@ -1,16 +1,25 @@
 package fisa.dev.homebanker.domain.login.service;
 
 import fisa.dev.homebanker.domain.login.dto.MyPageDTO;
-import fisa.dev.homebanker.domain.login.dto.ProductRegisterDTO;
+import fisa.dev.homebanker.domain.product.dto.SaleDTO;
+import fisa.dev.homebanker.domain.product.dto.SaleListDTO;
 import fisa.dev.homebanker.domain.login.dto.UserRegisterDTO;
 import fisa.dev.homebanker.domain.login.entity.User;
 import fisa.dev.homebanker.domain.login.exception.UserException;
 import fisa.dev.homebanker.domain.login.exception.UserExceptionEnum;
 import fisa.dev.homebanker.domain.login.repository.UserRepository;
 import fisa.dev.homebanker.domain.product.entity.Sale;
+import fisa.dev.homebanker.domain.product.exception.ProductException;
+import fisa.dev.homebanker.domain.product.exception.ProductionExceptionEnum;
 import fisa.dev.homebanker.domain.product.repository.SaleRepository;
+import fisa.dev.homebanker.global.util.pagination.PaginationResMaker;
 import jakarta.transaction.Transactional;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +32,7 @@ public class UserService {
   private final UserRepository userRepository;
   private final SaleRepository saleRepository;
   private final PasswordEncoder bCryptPasswordEncoder;
+  private final PaginationResMaker paginationResMaker;
 
   public User register(UserRegisterDTO userRegisterDTO) {
 
@@ -69,5 +79,23 @@ public class UserService {
         .phone(customer.getPhone())
         .address(customer.getAddress())
         .build();
+  }
+
+  public SaleListDTO findAllSales(Integer size, Integer page) {
+    if(page < 0) {
+      throw new ProductException(ProductionExceptionEnum.POO2);
+    }
+    if (size <= 0) {
+      throw new ProductException(ProductionExceptionEnum.P004);
+    }
+    SaleListDTO saleListDTO = new SaleListDTO();
+    Pageable pageable = PageRequest.of(page, size, Direction.DESC, "createdAt");
+    Page<Sale> foundPage = saleRepository.findAll(pageable);
+    saleListDTO.setPagination(paginationResMaker.makePaginationDto(foundPage));
+    List<SaleDTO> saleItems = foundPage.get()
+        .map(sale -> sale.toDto())
+        .toList();
+    saleListDTO.setSaleItems(saleItems);
+    return saleListDTO;
   }
 }

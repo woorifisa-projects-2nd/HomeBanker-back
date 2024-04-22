@@ -1,7 +1,7 @@
 package fisa.dev.homebanker.domain.login.controller;
 
 import fisa.dev.homebanker.domain.login.dto.MyPageDTO;
-import fisa.dev.homebanker.domain.login.dto.ProductRegisterDTO;
+import fisa.dev.homebanker.domain.product.dto.SaleListDTO;
 import fisa.dev.homebanker.domain.login.dto.UserRegisterDTO;
 import fisa.dev.homebanker.domain.login.entity.User;
 import fisa.dev.homebanker.domain.login.service.UserService;
@@ -9,9 +9,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -36,4 +36,10 @@ public class UserController {
     return ResponseEntity.ok(userService.updateMyPage(myPageDTO));
   }
 
+  @GetMapping("/api/mypage/sale")
+  public ResponseEntity<SaleListDTO> findAllSales(
+      @RequestParam Integer size, @RequestParam(defaultValue = "0") Integer page
+  ) {
+    return ResponseEntity.ok(userService.findAllSales(size, page));
+  }
 }
