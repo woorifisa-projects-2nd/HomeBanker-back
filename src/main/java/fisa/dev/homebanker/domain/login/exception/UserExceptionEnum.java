@@ -9,7 +9,9 @@ import org.springframework.http.HttpStatus;
 public enum UserExceptionEnum {
   P001("해당 사용자가 존재하지 않습니다.", HttpStatus.NOT_FOUND),
   P002("해당 고객이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
-  P003("해당 은행원이 존재하지 않습니다.", HttpStatus.NOT_FOUND);
+  P003("해당 은행원이 존재하지 않습니다.", HttpStatus.NOT_FOUND),
+  P004("해당 고객은 상품을 가입하지 않았습니다.", HttpStatus.NOT_FOUND);
+
 
   private final String msg;
   private final HttpStatus status;
