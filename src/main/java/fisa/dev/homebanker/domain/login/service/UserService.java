@@ -73,17 +73,4 @@ public class UserService {
         .address(customer.getAddress())
         .build();
   }
-
-//  public ProductRegisterDTO readProductRegister(Integer id) {
-//    User customer = userRepository.findById(id)
-//        .orElseThrow(() -> new UserException(UserExceptionEnum.P001));
-//    if(!"ROLE_CUSTOMER".equals(customer.getRole())) {
-//      throw new UserException(UserExceptionEnum.P002);
-//    }
-//
-//    // 이 때, exception 처리를 하는게 맞는지 확인하기
-//    Sale sale = saleRepository.findByCustomerId(customer.getId())
-//        .orElseThrow(() -> new UserException((UserExceptionEnum.P004)));
-//
-//  }
 }

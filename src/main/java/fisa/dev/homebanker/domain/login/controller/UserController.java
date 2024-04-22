@@ -35,8 +35,4 @@ public class UserController {
     return ResponseEntity.ok(userService.updateMyPage(myPageDTO));
   }
 
-//  @GetMapping("/api/mypage/productRegister/{id}")
-//  public ResponseEntity<ProductRegisterDTO> readProductRegister(@PathVariable Integer id) {
-//    return ResponseEntity.ok(userService.readProductRegister(id));
-//  }
 }
