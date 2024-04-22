@@ -64,11 +64,8 @@ public class UserService {
     customer.setPhone(myPageDTO.getPhone());
     customer.setAddress(myPageDTO.getAddress());
 
-    userRepository.save(customer);
-
     return MyPageDTO.builder()
         .name(customer.getName())
-        .joinDate(customer.getJoinDate())
         .phone(customer.getPhone())
         .address(customer.getAddress())
         .build();
