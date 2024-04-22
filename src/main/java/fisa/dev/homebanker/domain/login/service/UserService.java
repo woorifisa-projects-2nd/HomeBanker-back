@@ -1,13 +1,17 @@
 package fisa.dev.homebanker.domain.login.service;
 
 import fisa.dev.homebanker.domain.login.dto.MyPageDTO;
+import fisa.dev.homebanker.domain.login.dto.ProductRegisterDTO;
 import fisa.dev.homebanker.domain.login.dto.UserRegisterDTO;
 import fisa.dev.homebanker.domain.login.entity.User;
 import fisa.dev.homebanker.domain.login.exception.UserException;
 import fisa.dev.homebanker.domain.login.exception.UserExceptionEnum;
 import fisa.dev.homebanker.domain.login.repository.UserRepository;
+import fisa.dev.homebanker.domain.product.entity.Sale;
+import fisa.dev.homebanker.domain.product.repository.SaleRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +21,7 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
   private final UserRepository userRepository;
+  private final SaleRepository saleRepository;
   private final PasswordEncoder bCryptPasswordEncoder;
 
   public User register(UserRegisterDTO userRegisterDTO) {
@@ -35,9 +40,9 @@ public class UserService {
         .build());
   }
 
-  public MyPageDTO readMyPage(Integer id) {
-    User customer = userRepository.findById(id)
-        .orElseThrow(() -> new UserException(UserExceptionEnum.P001));
+  public MyPageDTO readMyPage() {
+    String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
+    User customer = userRepository.findByLoginId(loginId);
     if(!"ROLE_CUSTOMER".equals(customer.getRole())) {
       throw new UserException(UserExceptionEnum.P002);
     }
@@ -49,9 +54,9 @@ public class UserService {
         .build();
   }
 
-  public MyPageDTO updateMyPage(Integer id, MyPageDTO myPageDTO) {
-    User customer = userRepository.findById(id)
-        .orElseThrow(() -> new UserException(UserExceptionEnum.P001));
+  public MyPageDTO updateMyPage(MyPageDTO myPageDTO) {
+    String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
+    User customer = userRepository.findByLoginId(loginId);
     if(!"ROLE_CUSTOMER".equals(customer.getRole())) {
       throw new UserException(UserExceptionEnum.P002);
     }
@@ -68,4 +73,17 @@ public class UserService {
         .address(customer.getAddress())
         .build();
   }
+
+//  public ProductRegisterDTO readProductRegister(Integer id) {
+//    User customer = userRepository.findById(id)
+//        .orElseThrow(() -> new UserException(UserExceptionEnum.P001));
+//    if(!"ROLE_CUSTOMER".equals(customer.getRole())) {
+//      throw new UserException(UserExceptionEnum.P002);
+//    }
+//
+//    // 이 때, exception 처리를 하는게 맞는지 확인하기
+//    Sale sale = saleRepository.findByCustomerId(customer.getId())
+//        .orElseThrow(() -> new UserException((UserExceptionEnum.P004)));
+//
+//  }
 }

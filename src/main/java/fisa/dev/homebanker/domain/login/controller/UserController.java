@@ -1,6 +1,7 @@
 package fisa.dev.homebanker.domain.login.controller;
 
 import fisa.dev.homebanker.domain.login.dto.MyPageDTO;
+import fisa.dev.homebanker.domain.login.dto.ProductRegisterDTO;
 import fisa.dev.homebanker.domain.login.dto.UserRegisterDTO;
 import fisa.dev.homebanker.domain.login.entity.User;
 import fisa.dev.homebanker.domain.login.service.UserService;
@@ -24,13 +25,18 @@ public class UserController {
     return user;
   }
 
-  @GetMapping("/api/mypage/profile/{id}")
-  public ResponseEntity<MyPageDTO> readMyPage(@PathVariable Integer id) {
-    return ResponseEntity.ok(userService.readMyPage(id));
+  @GetMapping("/api/mypage/profile")
+  public ResponseEntity<MyPageDTO> readMyPage() {
+    return ResponseEntity.ok(userService.readMyPage());
   }
 
-  @PostMapping("/api/mypage/profile/{id}")
-  public ResponseEntity<MyPageDTO> updateMyPage(@PathVariable Integer id, @RequestBody MyPageDTO myPageDTO) {
-    return ResponseEntity.ok(userService.updateMyPage(id, myPageDTO));
+  @PostMapping("/api/mypage/profile")
+  public ResponseEntity<MyPageDTO> updateMyPage(@RequestBody MyPageDTO myPageDTO) {
+    return ResponseEntity.ok(userService.updateMyPage(myPageDTO));
   }
+
+//  @GetMapping("/api/mypage/productRegister/{id}")
+//  public ResponseEntity<ProductRegisterDTO> readProductRegister(@PathVariable Integer id) {
+//    return ResponseEntity.ok(userService.readProductRegister(id));
+//  }
 }
