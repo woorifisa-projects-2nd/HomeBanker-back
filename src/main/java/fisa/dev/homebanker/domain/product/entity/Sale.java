@@ -1,7 +1,6 @@
 package fisa.dev.homebanker.domain.product.entity;
 
 import fisa.dev.homebanker.domain.login.entity.User;
-import fisa.dev.homebanker.domain.product.dto.ProductDTO;
 import fisa.dev.homebanker.domain.product.dto.SaleDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,11 +51,15 @@ public class Sale {
 
   public SaleDTO toDto() {
     return SaleDTO.builder()
+        .saleId(saleId)
         .customerId(customerId.getId())
         .bankerId(bankerId.getId())
         .productId(productId.getProductId())
+        .productName(productId.getProductName())
+        .productDescription(productId.getProductDescription())
         .saleMonth(saleMonth)
         .saleAmount(saleAmount)
+        .createdAt(createdAt)
         .build();
   }
 }
