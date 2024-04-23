@@ -2,7 +2,7 @@ package fisa.dev.homebanker.domain.product.dto;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.NotNull;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,5 +34,5 @@ public class SaleDTO {
   @Max(value = 2100000000, message = "최대 금액(100억)을 초과하였습니다.")
   private Integer saleAmount;
 
-  private LocalDateTime createdAt;
+  private LocalDate createdAt;
 }

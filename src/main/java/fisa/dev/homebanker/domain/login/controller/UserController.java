@@ -1,6 +1,6 @@
 package fisa.dev.homebanker.domain.login.controller;
 
-import fisa.dev.homebanker.domain.login.dto.MyPageDTO;
+import fisa.dev.homebanker.domain.login.dto.MyPageProfileDTO;
 import fisa.dev.homebanker.domain.product.dto.SaleListDTO;
 import fisa.dev.homebanker.domain.login.dto.UserRegisterDTO;
 import fisa.dev.homebanker.domain.login.entity.User;
@@ -27,13 +27,13 @@ public class UserController {
   }
 
   @GetMapping("/api/mypage/profile")
-  public ResponseEntity<MyPageDTO> readMyPage() {
+  public ResponseEntity<MyPageProfileDTO> readMyPage() {
     return ResponseEntity.ok(userService.readMyPage());
   }
 
   @PostMapping("/api/mypage/profile")
-  public ResponseEntity<MyPageDTO> updateMyPage(@RequestBody @Validated MyPageDTO myPageDTO) {
-    return ResponseEntity.ok(userService.updateMyPage(myPageDTO));
+  public ResponseEntity<MyPageProfileDTO> updateMyPage(@RequestBody @Validated MyPageProfileDTO myPageProfileDTO) {
+    return ResponseEntity.ok(userService.updateMyPage(myPageProfileDTO));
   }
 
   @GetMapping("/api/mypage/sale")

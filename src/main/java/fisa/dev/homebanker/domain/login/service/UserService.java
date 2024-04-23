@@ -1,6 +1,6 @@
 package fisa.dev.homebanker.domain.login.service;
 
-import fisa.dev.homebanker.domain.login.dto.MyPageDTO;
+import fisa.dev.homebanker.domain.login.dto.MyPageProfileDTO;
 import fisa.dev.homebanker.domain.product.dto.SaleDTO;
 import fisa.dev.homebanker.domain.product.dto.SaleListDTO;
 import fisa.dev.homebanker.domain.login.dto.UserRegisterDTO;
@@ -14,6 +14,7 @@ import fisa.dev.homebanker.domain.product.exception.ProductionExceptionEnum;
 import fisa.dev.homebanker.domain.product.repository.SaleRepository;
 import fisa.dev.homebanker.global.util.pagination.PaginationResMaker;
 import jakarta.transaction.Transactional;
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -50,13 +51,13 @@ public class UserService {
         .build());
   }
 
-  public MyPageDTO readMyPage() {
+  public MyPageProfileDTO readMyPage() {
     String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
     User customer = userRepository.findByLoginId(loginId);
     if(!"ROLE_CUSTOMER".equals(customer.getRole())) {
       throw new UserException(UserExceptionEnum.P002);
     }
-    return MyPageDTO.builder()
+    return MyPageProfileDTO.builder()
         .name(customer.getName())
         .joinDate(customer.getJoinDate())
         .phone(customer.getPhone())
@@ -64,17 +65,17 @@ public class UserService {
         .build();
   }
 
-  public MyPageDTO updateMyPage(MyPageDTO myPageDTO) {
+  public MyPageProfileDTO updateMyPage(MyPageProfileDTO myPageProfileDTO) {
     String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
     User customer = userRepository.findByLoginId(loginId);
     if(!"ROLE_CUSTOMER".equals(customer.getRole())) {
       throw new UserException(UserExceptionEnum.P002);
     }
-    customer.setName(myPageDTO.getName());
-    customer.setPhone(myPageDTO.getPhone());
-    customer.setAddress(myPageDTO.getAddress());
+    customer.setName(myPageProfileDTO.getName());
+    customer.setPhone(myPageProfileDTO.getPhone());
+    customer.setAddress(myPageProfileDTO.getAddress());
 
-    return MyPageDTO.builder()
+    return MyPageProfileDTO.builder()
         .name(customer.getName())
         .phone(customer.getPhone())
         .address(customer.getAddress())

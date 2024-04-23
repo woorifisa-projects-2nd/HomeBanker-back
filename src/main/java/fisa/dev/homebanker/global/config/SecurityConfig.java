@@ -3,6 +3,7 @@ package fisa.dev.homebanker.global.config;
 import fisa.dev.homebanker.domain.login.jwt.JwtFilter;
 import fisa.dev.homebanker.domain.login.jwt.JwtUtil;
 import fisa.dev.homebanker.domain.login.jwt.LoginFilter;
+import fisa.dev.homebanker.domain.login.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collections;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,7 @@ public class SecurityConfig {
 
   private final AuthenticationConfiguration authenticationConfiguration;
   private final JwtUtil jwtUtil;
+  private final UserRepository userRepository;
 
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration)
@@ -76,7 +78,7 @@ public class SecurityConfig {
 
         .addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class)
 
-        .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil),
+        .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, userRepository),
             UsernamePasswordAuthenticationFilter.class)
 
         .headers((headerConfig) ->
