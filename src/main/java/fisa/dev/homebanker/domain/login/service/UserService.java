@@ -1,13 +1,11 @@
 package fisa.dev.homebanker.domain.login.service;
 
 import fisa.dev.homebanker.domain.login.dto.MyPageDTO;
-import fisa.dev.homebanker.domain.login.dto.ProductRegisterDTO;
 import fisa.dev.homebanker.domain.login.dto.UserRegisterDTO;
 import fisa.dev.homebanker.domain.login.entity.User;
 import fisa.dev.homebanker.domain.login.exception.UserException;
 import fisa.dev.homebanker.domain.login.exception.UserExceptionEnum;
 import fisa.dev.homebanker.domain.login.repository.UserRepository;
-import fisa.dev.homebanker.domain.product.entity.Sale;
 import fisa.dev.homebanker.domain.product.repository.SaleRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -40,11 +38,14 @@ public class UserService {
         .build());
   }
 
-<<<<<<< Updated upstream
+  public String findRoleByLoginId(String loginId) {
+    return (userRepository.findByLoginId(loginId)).getRole();
+  }
+
   public MyPageDTO readMyPage() {
     String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
     User customer = userRepository.findByLoginId(loginId);
-    if(!"ROLE_CUSTOMER".equals(customer.getRole())) {
+    if (!"ROLE_CUSTOMER".equals(customer.getRole())) {
       throw new UserException(UserExceptionEnum.P002);
     }
     return MyPageDTO.builder()
@@ -58,7 +59,7 @@ public class UserService {
   public MyPageDTO updateMyPage(MyPageDTO myPageDTO) {
     String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
     User customer = userRepository.findByLoginId(loginId);
-    if(!"ROLE_CUSTOMER".equals(customer.getRole())) {
+    if (!"ROLE_CUSTOMER".equals(customer.getRole())) {
       throw new UserException(UserExceptionEnum.P002);
     }
     customer.setName(myPageDTO.getName());
@@ -70,10 +71,6 @@ public class UserService {
         .phone(customer.getPhone())
         .address(customer.getAddress())
         .build();
-=======
-  public String findRoleByLoginId(String loginId) {
-    return (userRepository.findByLoginId(loginId)).getRole();
-
->>>>>>> Stashed changes
   }
+  
 }

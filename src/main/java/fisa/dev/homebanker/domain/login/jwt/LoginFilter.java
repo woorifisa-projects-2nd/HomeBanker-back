@@ -66,10 +66,6 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     // JwtUtil에 token을 만들어달라고 전달
     String token = jwtUtil.createJwt(loginId, role, 60 * 60 * 24 * 1000L); // 1일
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
     response.addHeader("Authorization", "Bearer " + token);
   }
 

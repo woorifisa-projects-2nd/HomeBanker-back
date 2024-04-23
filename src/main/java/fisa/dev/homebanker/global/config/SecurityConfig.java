@@ -65,14 +65,10 @@ public class SecurityConfig {
 
         .authorizeHttpRequests((auth) -> auth
             .requestMatchers("/h2-console/**").permitAll()
-<<<<<<< Updated upstream
-            .requestMatchers("/", "/register", "/login", "/api/board/**", "/error", "/api/product/**").permitAll()
-=======
-            .requestMatchers("/", "/register", "/login", "/logout", "/api/board/**").permitAll()
->>>>>>> Stashed changes
+            .requestMatchers("/", "/register", "/login", "/exit", "/api/board/**", "/error",
+                "/api/product/**").permitAll()
             .requestMatchers("/api/banker/**").hasAnyRole("ADMIN", "BANKER")
             .requestMatchers("/api/mypage/**").hasRole("CUSTOMER")
-//            .requestMatchers("/api/product/**").hasRole("CUSTOMER")
             .anyRequest().authenticated())
 
         .sessionManagement((session) -> session
