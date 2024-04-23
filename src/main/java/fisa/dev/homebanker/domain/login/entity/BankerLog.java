@@ -9,12 +9,10 @@ import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Builder
 @Getter
-@Setter
 @Table(name = "banker_log")
 public class BankerLog {
 
@@ -22,12 +20,12 @@ public class BankerLog {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long logId;
 
-  @Column(name = "banker_id")
+  @Column(name = "banker_id", updatable = false)
   private String bankerId;
 
-  @Column(name = "banker_status")
+  @Column(name = "banker_status", updatable = false)
   private String bankerStatus;
 
-  @Column(name = "banker_time")
+  @Column(name = "banker_time", updatable = false)
   private LocalDateTime bankerTime;
 }
