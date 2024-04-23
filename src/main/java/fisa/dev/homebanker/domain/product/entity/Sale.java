@@ -9,7 +9,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,7 +43,7 @@ public class Sale {
   private Product productId;
 
   @Column
-  private LocalDateTime createdAt;
+  private LocalDate createdAt;
 
   @Column
   private Integer saleMonth;

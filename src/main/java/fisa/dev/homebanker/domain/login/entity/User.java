@@ -6,6 +6,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 import lombok.AllArgsConstructor;
@@ -31,7 +32,7 @@ public class User {
   private String name;
 
   @Column(nullable = false)
-  private Date birth;
+  private LocalDate birth;
 
   @Column(nullable = false)
   private String phone;
@@ -55,5 +56,5 @@ public class User {
   private LocalDateTime recentLogin;
 
   @Column(nullable = false)
-  private Date joinDate;
+  private LocalDate joinDate;
 }
