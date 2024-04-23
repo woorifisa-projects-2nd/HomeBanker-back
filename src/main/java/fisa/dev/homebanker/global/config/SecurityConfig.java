@@ -3,6 +3,7 @@ package fisa.dev.homebanker.global.config;
 import fisa.dev.homebanker.domain.login.jwt.JwtFilter;
 import fisa.dev.homebanker.domain.login.jwt.JwtUtil;
 import fisa.dev.homebanker.domain.login.jwt.LoginFilter;
+import fisa.dev.homebanker.domain.login.service.LogService;
 import fisa.dev.homebanker.domain.login.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collections;
@@ -28,6 +29,7 @@ public class SecurityConfig {
 
   private final AuthenticationConfiguration authenticationConfiguration;
   private final JwtUtil jwtUtil;
+  private final LogService logService;
   private final UserRepository userRepository;
 
   @Bean
@@ -67,10 +69,10 @@ public class SecurityConfig {
 
         .authorizeHttpRequests((auth) -> auth
             .requestMatchers("/h2-console/**").permitAll()
-            .requestMatchers("/", "/register", "/login", "/api/board/**", "/error", "/api/product/**").permitAll()
+            .requestMatchers("/", "/register", "/login", "/exit", "/api/board/**", "/error",
+                "/api/product/**").permitAll()
             .requestMatchers("/api/banker/**").hasAnyRole("ADMIN", "BANKER")
             .requestMatchers("/api/mypage/**").hasRole("CUSTOMER")
-//            .requestMatchers("/api/product/**").hasRole("CUSTOMER")
             .anyRequest().authenticated())
 
         .sessionManagement((session) -> session
@@ -78,7 +80,8 @@ public class SecurityConfig {
 
         .addFilterBefore(new JwtFilter(jwtUtil), LoginFilter.class)
 
-        .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil, userRepository),
+        .addFilterAt(new LoginFilter(authenticationManager(authenticationConfiguration), jwtUtil,
+                logService, userRepository),
             UsernamePasswordAuthenticationFilter.class)
 
         .headers((headerConfig) ->

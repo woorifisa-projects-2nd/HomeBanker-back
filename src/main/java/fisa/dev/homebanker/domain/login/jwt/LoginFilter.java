@@ -1,6 +1,7 @@
 package fisa.dev.homebanker.domain.login.jwt;
 
 import fisa.dev.homebanker.domain.login.dto.CustomUserDetails;
+import fisa.dev.homebanker.domain.login.service.LogService;
 import fisa.dev.homebanker.domain.login.entity.User;
 import fisa.dev.homebanker.domain.login.repository.UserRepository;
 import jakarta.servlet.FilterChain;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Iterator;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -17,12 +19,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@Slf4j
 @RequiredArgsConstructor
 public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
   private final AuthenticationManager authenticationManager;
   private final JwtUtil jwtUtil;
+  private final LogService logService;
   private final UserRepository userRepository;
+
   @Override
   public Authentication attemptAuthentication(
       HttpServletRequest request, HttpServletResponse response) {
@@ -65,12 +70,20 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
     // JwtUtil에 token을 만들어달라고 전달
     String token = jwtUtil.createJwt(loginId, role, 60 * 60 * 24 * 1000L); // 1일
-
     response.addHeader("Authorization", "Bearer " + token);
+
+    log.info("로그인 = {} / {}", role, loginId);
+
+    if (role.equals("ROLE_CUSTOMER")) {
+      logService.customerLoginService(loginId);
+    } else if (role.equals("ROLE_ADMIN")) {
+      logService.bankerLoginService(loginId);
+    }
 
     User user = userRepository.findByLoginId(loginId);
     user.setRecentLogin(LocalDateTime.now());
     userRepository.save(user);
+
   }
 
   //로그인 실패시 실행하는 메소드

@@ -51,10 +51,14 @@ public class UserService {
         .build());
   }
 
+  public String findRoleByLoginId(String loginId) {
+    return (userRepository.findByLoginId(loginId)).getRole();
+  }
+
   public MyPageProfileDTO readMyPage() {
     String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
     User customer = userRepository.findByLoginId(loginId);
-    if(!"ROLE_CUSTOMER".equals(customer.getRole())) {
+    if (!"ROLE_CUSTOMER".equals(customer.getRole())) {
       throw new UserException(UserExceptionEnum.P002);
     }
     return MyPageProfileDTO.builder()
@@ -68,7 +72,7 @@ public class UserService {
   public MyPageProfileDTO updateMyPage(MyPageProfileDTO myPageProfileDTO) {
     String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
     User customer = userRepository.findByLoginId(loginId);
-    if(!"ROLE_CUSTOMER".equals(customer.getRole())) {
+    if (!"ROLE_CUSTOMER".equals(customer.getRole())) {
       throw new UserException(UserExceptionEnum.P002);
     }
     customer.setName(myPageProfileDTO.getName());
