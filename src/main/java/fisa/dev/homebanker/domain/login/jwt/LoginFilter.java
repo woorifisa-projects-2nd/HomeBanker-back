@@ -1,6 +1,7 @@
 package fisa.dev.homebanker.domain.login.jwt;
 
 import fisa.dev.homebanker.domain.login.dto.CustomUserDetails;
+import fisa.dev.homebanker.domain.login.service.LogService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -21,6 +22,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
 
   private final AuthenticationManager authenticationManager;
   private final JwtUtil jwtUtil;
+  private final LogService logService;
 
   @Override
   public Authentication attemptAuthentication(
@@ -62,11 +64,17 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     GrantedAuthority auth = iterator.next();
     String role = auth.getAuthority();
 
-    log.info("로그인 = {} / {}", role, loginId);
-
     // JwtUtil에 token을 만들어달라고 전달
     String token = jwtUtil.createJwt(loginId, role, 60 * 60 * 24 * 1000L); // 1일
     response.addHeader("Authorization", "Bearer " + token);
+
+    log.info("로그인 = {} / {}", role, loginId);
+
+    if (role.equals("ROLE_CUSTOMER")) {
+      logService.customerLoginService(loginId);
+    } else if (role.equals("ROLE_ADMIN")) {
+      logService.bankerLoginService(loginId);
+    }
   }
 
   //로그인 실패시 실행하는 메소드

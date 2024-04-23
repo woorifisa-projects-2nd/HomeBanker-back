@@ -1,5 +1,6 @@
 package fisa.dev.homebanker.domain.login.controller;
 
+import fisa.dev.homebanker.domain.login.service.LogService;
 import fisa.dev.homebanker.domain.login.service.UserService;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class LogoutController {
 
   private final UserService userService;
+  private final LogService logService;
 
   @PostMapping("/exit")
   public ResponseEntity<?> exit(@RequestBody Map<String, String> requestData) {
@@ -27,6 +29,12 @@ public class LogoutController {
       if (authorizedRole.equals(role)) {
 
         log.info("로그아웃 = {} / {}", role, loginId);
+
+        if (role.equals("ROLE_CUSTOMER")) {
+          logService.customerLogoutService(loginId);
+        } else if (role.equals("ROLE_ADMIN")) {
+          logService.bankerLogoutService(loginId);
+        }
 
       }
     }

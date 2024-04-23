@@ -72,18 +72,22 @@ CREATE TABLE `identified` (
 );
 
 CREATE TABLE `product_code` (
-                                `product_code`	VARCHAR(30)	NOT NULL ,
+                                `product_code`	VARCHAR(30)	NOT NULL,
                                 `type_name`	VARCHAR(30)	NOT NULL
 );
 
 CREATE TABLE `customer_log` (
                                 `log_id`	INT	NOT NULL AUTO_INCREMENT,
-                                `customer_id`	INT	NOT NULL
+                                `customer_id`	VARCHAR(30)	NOT NULL,
+                                `customer_status` VARCHAR(10) NOT NULL,
+                                `customer_time` DATETIME NOT NULL
 );
 
 CREATE TABLE `banker_log` (
                               `log_id`	INT	NOT NULL AUTO_INCREMENT,
-                              `banker_id`	INT	NOT NULL
+                              `banker_id`	VARCHAR(30)	NOT NULL,
+                              `banker_status` VARCHAR(10) NOT NULL,
+                              `banker_time` DATETIME NOT NULL
 );
 
 ALTER TABLE `users` ADD CONSTRAINT `PK_USER` PRIMARY KEY (
