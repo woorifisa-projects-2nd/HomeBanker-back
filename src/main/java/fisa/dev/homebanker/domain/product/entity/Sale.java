@@ -1,7 +1,6 @@
 package fisa.dev.homebanker.domain.product.entity;
 
 import fisa.dev.homebanker.domain.login.entity.User;
-import fisa.dev.homebanker.domain.product.dto.ProductDTO;
 import fisa.dev.homebanker.domain.product.dto.SaleDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +9,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,7 +43,7 @@ public class Sale {
   private Product productId;
 
   @Column
-  private LocalDateTime createdAt;
+  private LocalDate createdAt;
 
   @Column
   private Integer saleMonth;
@@ -52,11 +53,15 @@ public class Sale {
 
   public SaleDTO toDto() {
     return SaleDTO.builder()
+        .saleId(saleId)
         .customerId(customerId.getId())
         .bankerId(bankerId.getId())
         .productId(productId.getProductId())
+        .productName(productId.getProductName())
+        .productDescription(productId.getProductDescription())
         .saleMonth(saleMonth)
         .saleAmount(saleAmount)
+        .createdAt(createdAt)
         .build();
   }
 }

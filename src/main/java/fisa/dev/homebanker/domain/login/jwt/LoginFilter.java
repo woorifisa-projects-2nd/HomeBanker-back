@@ -2,9 +2,12 @@ package fisa.dev.homebanker.domain.login.jwt;
 
 import fisa.dev.homebanker.domain.login.dto.CustomUserDetails;
 import fisa.dev.homebanker.domain.login.service.LogService;
+import fisa.dev.homebanker.domain.login.entity.User;
+import fisa.dev.homebanker.domain.login.repository.UserRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Iterator;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +26,7 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
   private final AuthenticationManager authenticationManager;
   private final JwtUtil jwtUtil;
   private final LogService logService;
+  private final UserRepository userRepository;
 
   @Override
   public Authentication attemptAuthentication(
@@ -75,6 +79,11 @@ public class LoginFilter extends UsernamePasswordAuthenticationFilter {
     } else if (role.equals("ROLE_ADMIN")) {
       logService.bankerLoginService(loginId);
     }
+
+    User user = userRepository.findByLoginId(loginId);
+    user.setRecentLogin(LocalDateTime.now());
+    userRepository.save(user);
+
   }
 
   //로그인 실패시 실행하는 메소드

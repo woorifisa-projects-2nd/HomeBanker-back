@@ -112,9 +112,9 @@ public class ProductService {
         .customerId(customer)
         .bankerId(banker)
         .productId(product)
-        .createdAt(LocalDateTime.now())
         .saleMonth(saleDTO.getSaleMonth())
         .saleAmount(saleDTO.getSaleAmount())
+        .createdAt(saleDTO.getCreatedAt())
         .build());
     return sale.toDto();
   }
