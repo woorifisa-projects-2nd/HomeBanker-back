@@ -25,7 +25,9 @@ public class LogoutController {
     if (SecurityContextHolder.getContext().getAuthentication().getName().equals(loginId)) {
       String authorizedRole = userService.findRoleByLoginId(loginId);
       if (authorizedRole.equals(role)) {
-        log.info("Logout = {} / {}", role, loginId);
+
+        log.info("로그아웃 = {} / {}", role, loginId);
+
       }
     }
 

@@ -77,12 +77,12 @@ CREATE TABLE `product_code` (
 );
 
 CREATE TABLE `customer_log` (
-                                `log_id`	VARCHAR(255)	NOT NULL ,
+                                `log_id`	INT	NOT NULL AUTO_INCREMENT,
                                 `customer_id`	INT	NOT NULL
 );
 
 CREATE TABLE `banker_log` (
-                              `log_id`	INT	NOT NULL ,
+                              `log_id`	INT	NOT NULL AUTO_INCREMENT,
                               `banker_id`	INT	NOT NULL
 );
 
