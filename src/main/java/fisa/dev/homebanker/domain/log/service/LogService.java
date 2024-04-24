@@ -1,7 +1,7 @@
-package fisa.dev.homebanker.domain.login.service;
+package fisa.dev.homebanker.domain.log.service;
 
-import fisa.dev.homebanker.domain.login.entity.BankerLog;
-import fisa.dev.homebanker.domain.login.entity.CustomerLog;
+import fisa.dev.homebanker.domain.log.entity.BankerLog;
+import fisa.dev.homebanker.domain.log.entity.CustomerLog;
 import fisa.dev.homebanker.domain.login.repository.BankerLogRepository;
 import fisa.dev.homebanker.domain.login.repository.CustomerLogRepository;
 import jakarta.transaction.Transactional;

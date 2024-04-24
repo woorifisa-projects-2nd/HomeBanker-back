@@ -1,7 +1,7 @@
 package fisa.dev.homebanker.domain.login.jwt;
 
+import fisa.dev.homebanker.domain.log.service.LogService;
 import fisa.dev.homebanker.domain.login.dto.CustomUserDetails;
-import fisa.dev.homebanker.domain.login.service.LogService;
 import fisa.dev.homebanker.domain.login.entity.User;
 import fisa.dev.homebanker.domain.login.repository.UserRepository;
 import jakarta.servlet.FilterChain;

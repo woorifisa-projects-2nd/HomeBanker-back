@@ -1,4 +1,4 @@
-package fisa.dev.homebanker.domain.login.entity;
+package fisa.dev.homebanker.domain.log.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -13,19 +13,19 @@ import lombok.Getter;
 @Entity
 @Builder
 @Getter
-@Table(name = "customer_log")
-public class CustomerLog {
+@Table(name = "banker_log")
+public class BankerLog {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long logId;
 
-  @Column(name = "customer_id", updatable = false)
-  private String customerId;
+  @Column(name = "banker_id", updatable = false)
+  private String bankerId;
 
-  @Column(name = "customer_status", updatable = false)
-  private String customerStatus;
+  @Column(name = "banker_status", updatable = false)
+  private String bankerStatus;
 
-  @Column(name = "customer_time", updatable = false)
-  private LocalDateTime customerTime;
+  @Column(name = "banker_time", updatable = false)
+  private LocalDateTime bankerTime;
 }
