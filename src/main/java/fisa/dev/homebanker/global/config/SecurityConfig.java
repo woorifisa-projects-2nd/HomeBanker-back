@@ -1,9 +1,9 @@
 package fisa.dev.homebanker.global.config;
 
+import fisa.dev.homebanker.domain.log.service.LogService;
 import fisa.dev.homebanker.domain.login.jwt.JwtFilter;
 import fisa.dev.homebanker.domain.login.jwt.JwtUtil;
 import fisa.dev.homebanker.domain.login.jwt.LoginFilter;
-import fisa.dev.homebanker.domain.login.service.LogService;
 import fisa.dev.homebanker.domain.login.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.Collections;

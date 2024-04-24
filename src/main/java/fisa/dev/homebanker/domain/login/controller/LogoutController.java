@@ -1,6 +1,6 @@
 package fisa.dev.homebanker.domain.login.controller;
 
-import fisa.dev.homebanker.domain.login.service.LogService;
+import fisa.dev.homebanker.domain.log.service.LogService;
 import fisa.dev.homebanker.domain.login.service.UserService;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;

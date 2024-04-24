@@ -1,4 +1,4 @@
-package fisa.dev.homebanker.domain.board.controller;
+package fisa.dev.homebanker.domain.video.controller;
 
 import io.openvidu.java.client.Connection;
 import io.openvidu.java.client.ConnectionProperties;

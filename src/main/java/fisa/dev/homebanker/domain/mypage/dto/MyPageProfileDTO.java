@@ -1,4 +1,4 @@
-package fisa.dev.homebanker.domain.login.dto;
+package fisa.dev.homebanker.domain.mypage.dto;
 
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDate;
@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @Builder
 public class MyPageProfileDTO {
+
   @NotNull(message = "name(이름)은 필수 입력값입니다.")
   private String name;
 
