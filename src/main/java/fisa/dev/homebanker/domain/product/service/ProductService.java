@@ -16,7 +16,6 @@ import fisa.dev.homebanker.domain.product.exception.ProductionExceptionEnum;
 import fisa.dev.homebanker.domain.product.repository.ProductRepository;
 import fisa.dev.homebanker.domain.product.repository.SaleRepository;
 import fisa.dev.homebanker.global.util.pagination.PaginationResMaker;
-import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -96,21 +95,19 @@ public class ProductService {
   }
 
   public SaleDTO registerProduct(SaleDTO saleDTO) {
-    User customer = userRepository.findById(saleDTO.getCustomerId())
-        .orElseThrow(() -> new UserException(UserExceptionEnum.P001));
+    User customer = userRepository.findByLoginId(saleDTO.getCustomerLoginId());
     if(!"ROLE_CUSTOMER".equals(customer.getRole())) {
       throw new UserException(UserExceptionEnum.P002);
     }
-    User banker = userRepository.findById(saleDTO.getBankerId())
-        .orElseThrow(() -> new UserException(UserExceptionEnum.P001));
-    if(!"ROLE_BANKER".equals(banker.getRole())) {
+    User banker = userRepository.findByLoginId(saleDTO.getBankerLoginId());
+    if(!"ROLE_ADMIN".equals(banker.getRole())) {
       throw new UserException(UserExceptionEnum.P003);
     }
     Product product = productRepository.findById(saleDTO.getProductId())
         .orElseThrow(() -> new ProductException(ProductionExceptionEnum.P001));
     Sale sale = saleRepository.save(Sale.builder()
-        .customerId(customer)
-        .bankerId(banker)
+        .customerLoginId(customer)
+        .bankerLoginId(banker)
         .productId(product)
         .saleMonth(saleDTO.getSaleMonth())
         .saleAmount(saleDTO.getSaleAmount())
