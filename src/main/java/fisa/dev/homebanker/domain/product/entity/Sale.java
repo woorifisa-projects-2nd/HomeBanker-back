@@ -10,8 +10,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Date;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,12 +29,12 @@ public class Sale {
   private Long saleId;
 
   @ManyToOne
-  @JoinColumn(name = "customer_id")
-  private User customerId;
+  @JoinColumn(name = "customer")
+  private User customer;
 
   @ManyToOne
-  @JoinColumn(name = "banker_id")
-  private User bankerId;
+  @JoinColumn(name = "banker")
+  private User banker;
 
   @ManyToOne
   @JoinColumn(name = "product_id")
@@ -54,8 +52,8 @@ public class Sale {
   public SaleDTO toDto() {
     return SaleDTO.builder()
         .saleId(saleId)
-        .customerId(customerId.getId())
-        .bankerId(bankerId.getId())
+        .customer(customer.getLoginId())
+        .banker(banker.getLoginId())
         .productId(productId.getProductId())
         .productName(productId.getProductName())
         .productDescription(productId.getProductDescription())

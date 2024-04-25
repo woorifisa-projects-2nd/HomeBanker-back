@@ -96,21 +96,19 @@ public class ProductService {
   }
 
   public SaleDTO registerProduct(SaleDTO saleDTO) {
-    User customer = userRepository.findById(saleDTO.getCustomerId())
-        .orElseThrow(() -> new UserException(UserExceptionEnum.P001));
+    User customer = userRepository.findByLoginId(saleDTO.getCustomer());
     if(!"ROLE_CUSTOMER".equals(customer.getRole())) {
       throw new UserException(UserExceptionEnum.P002);
     }
-    User banker = userRepository.findById(saleDTO.getBankerId())
-        .orElseThrow(() -> new UserException(UserExceptionEnum.P001));
-    if(!"ROLE_BANKER".equals(banker.getRole())) {
+    User banker = userRepository.findByLoginId(saleDTO.getBanker());
+    if(!"ROLE_ADMIN".equals(banker.getRole())) {
       throw new UserException(UserExceptionEnum.P003);
     }
     Product product = productRepository.findById(saleDTO.getProductId())
         .orElseThrow(() -> new ProductException(ProductionExceptionEnum.P001));
     Sale sale = saleRepository.save(Sale.builder()
-        .customerId(customer)
-        .bankerId(banker)
+        .customer(customer)
+        .banker(banker)
         .productId(product)
         .saleMonth(saleDTO.getSaleMonth())
         .saleAmount(saleDTO.getSaleAmount())

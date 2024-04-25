@@ -62,16 +62,23 @@ public class MyPageService {
         .build();
   }
 
-  public SaleListDTO findAllSales(Integer size, Integer page) {
+  public SaleListDTO findAllSales(Integer size, Integer page, String loginId) {
     if (page < 0) {
       throw new ProductException(ProductionExceptionEnum.POO2);
     }
     if (size <= 0) {
       throw new ProductException(ProductionExceptionEnum.P004);
     }
-    SaleListDTO saleListDTO = new SaleListDTO();
+//    User user = saleRepository.findByCustomer(loginId);
+//    if(user == null) {
+//      throw new UserException(UserExceptionEnum.P004);
+//    }
     Pageable pageable = PageRequest.of(page, size, Direction.DESC, "createdAt");
-    Page<Sale> foundPage = saleRepository.findAll(pageable);
+    Page<Sale> foundPage = saleRepository.findAllByCustomer_LoginId(loginId, pageable);
+    if (foundPage.isEmpty()) {
+      throw new UserException(UserExceptionEnum.P004);
+    }
+    SaleListDTO saleListDTO = new SaleListDTO();
     saleListDTO.setPagination(paginationResMaker.makePaginationDto(foundPage));
     List<SaleDTO> saleItems = foundPage.get()
         .map(sale -> sale.toDto())

@@ -13,11 +13,13 @@ import lombok.Setter;
 public class SaleDTO {
   private Long saleId;
 
-  @NotNull(message = "customerId는 필수 입력값입니다.")
-  private Integer customerId;
+  @NotNull(message = "customerLoginId는 필수 입력값입니다.")
+//  private String customerLoginId;
+  private String customer;
 
-  @NotNull(message = "bankerId는 필수 입력값입니다.")
-  private Integer bankerId;
+  @NotNull(message = "bankerLoginId는 필수 입력값입니다.")
+//  private String bankerLoginId;
+  private String banker;
 
   @NotNull(message = "productId는 필수 입력값입니다.")
   private Long productId;
@@ -31,7 +33,7 @@ public class SaleDTO {
   private Integer saleMonth;
 
   @NotNull(message = "saleAmount(가입 개월수)는 필수 입력값입니다.")
-  @Max(value = 2100000000, message = "최대 금액(100억)을 초과하였습니다.")
+  @Max(value = 2100000000, message = "최대 금액(21억)을 초과하였습니다.")
   private Integer saleAmount;
 
   private LocalDate createdAt;

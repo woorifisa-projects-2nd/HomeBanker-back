@@ -3,8 +3,10 @@ package fisa.dev.homebanker.domain.mypage.controller;
 import fisa.dev.homebanker.domain.mypage.dto.MyPageProfileDTO;
 import fisa.dev.homebanker.domain.mypage.service.MyPageService;
 import fisa.dev.homebanker.domain.product.dto.SaleListDTO;
+import java.security.Principal;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,7 +35,8 @@ public class MyPageController {
   public ResponseEntity<SaleListDTO> findAllSales(
       @RequestParam Integer size, @RequestParam(defaultValue = "0") Integer page
   ) {
-    return ResponseEntity.ok(myPageService.findAllSales(size, page));
+    String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
+    return ResponseEntity.ok(myPageService.findAllSales(size, page, loginId));
   }
 
 }
