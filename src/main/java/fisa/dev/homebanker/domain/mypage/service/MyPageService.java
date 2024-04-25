@@ -69,12 +69,8 @@ public class MyPageService {
     if (size <= 0) {
       throw new ProductException(ProductionExceptionEnum.P004);
     }
-//    User user = saleRepository.findByCustomer(loginId);
-//    if(user == null) {
-//      throw new UserException(UserExceptionEnum.P004);
-//    }
     Pageable pageable = PageRequest.of(page, size, Direction.DESC, "createdAt");
-    Page<Sale> foundPage = saleRepository.findAllByCustomer_LoginId(loginId, pageable);
+    Page<Sale> foundPage = saleRepository.findAllByCustomerLoginId_LoginId(loginId, pageable);
     if (foundPage.isEmpty()) {
       throw new UserException(UserExceptionEnum.P004);
     }

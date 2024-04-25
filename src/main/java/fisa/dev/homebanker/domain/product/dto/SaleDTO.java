@@ -14,12 +14,10 @@ public class SaleDTO {
   private Long saleId;
 
   @NotNull(message = "customerLoginId는 필수 입력값입니다.")
-//  private String customerLoginId;
-  private String customer;
+  private String customerLoginId;
 
   @NotNull(message = "bankerLoginId는 필수 입력값입니다.")
-//  private String bankerLoginId;
-  private String banker;
+  private String bankerLoginId;
 
   @NotNull(message = "productId는 필수 입력값입니다.")
   private Long productId;
