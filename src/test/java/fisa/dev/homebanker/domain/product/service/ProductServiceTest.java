@@ -44,19 +44,19 @@ class ProductServiceTest {
   @DisplayName("상품 노출여부 업데이트")
   void changeVisibility() {
     Long productId = 1L;
-    boolean toBe = false;
+    boolean status = true;
 
     ChangeVisibilityDTO visibilityDTO = ChangeVisibilityDTO.builder()
         .productId(productId)
-        .isShown(toBe)
+        .isShown(status)
         .build();
 
     Boolean prev = productRepository.findById(productId).get().getIsShown();
     productService.changeVisibility(visibilityDTO);
     Boolean after = productRepository.findById(productId).get().getIsShown();
 
-    //Assertions.assertNotEquals(prev, after);
-    Assertions.assertEquals(after, toBe);
+    Assertions.assertEquals(status, prev);
+    Assertions.assertNotEquals(prev, after);
 
   }
 

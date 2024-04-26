@@ -154,7 +154,7 @@ public class ProductControllerTest {
         .productId(1L)
         .productDescription("카드 상품 조회 테스트")
         .productInterest(null)
-        .isShown(false)
+        .isShown(true)
         .maxMonth(null)
         .productCode(new ProductCode("C001", "카드"))
         .build();
@@ -163,9 +163,10 @@ public class ProductControllerTest {
     productDTOS.add(productDTO);
     ProductListDTO productListDTO = new ProductListDTO(paginationDTO, productDTOS);
 
-    given(productService.findAllProducts(category, page, size))
+    given(productService.findAllProducts(category, size, page))
         .willReturn(productListDTO);
 
+    //when
     MvcResult result = mockMvc.perform(
             get("/api/banker/product?category=" + category + "&page=" + page + "&size=" + size)
                 .header("Authorization", "Bearer " + token)//jwt 담기
@@ -177,6 +178,7 @@ public class ProductControllerTest {
         .andExpect(jsonPath("$.productItems[0].productCode.typeName").value("카드"))
         .andReturn();
 
+    //then
     verify(productService).findAllProducts(category, size, page);
   }
 

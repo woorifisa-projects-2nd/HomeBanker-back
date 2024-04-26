@@ -124,26 +124,25 @@ public class VideoControllerTest {
   @Test
   @DisplayName("토큰 생성-성공")
   public void createTokenSuccess() throws Exception {
-    //given
     String sessionId = "sessionA";
+    Map<String, Object> map = new HashMap<>();
     String domain = "firstpenguin.shop";
-    String expected = "wss://" + domain + "?sessionId=" + sessionId + "&token=";
+    String openviduToken = "wss://" + domain + "?sessionId=" + sessionId + "&token=";
 
-    given(openviduController.createConnection(sessionId, new HashMap<>())).willReturn(
-        ResponseEntity.ok(expected));
+    given(openviduController.createConnection(sessionId, map)).willReturn(
+        ResponseEntity.ok(openviduToken));
 
-    //when
     MvcResult result = mockMvc.perform(post("/api/sessions/{sessionId}/connections", sessionId)
             .contentType(MediaType.APPLICATION_JSON)
             .characterEncoding(StandardCharsets.UTF_8)
-            .header("Authorization", "Bearer " + token))
+            .header("Authorization", "Bearer " + token)
+            .content("{\n"
+                + "}"))
         .andExpect(status().is2xxSuccessful())
+        .andExpect(content().string(openviduToken))
         .andDo(print())
         .andReturn();
 
-    //then
-    Assertions.assertTrue(result.getResponse().getContentAsString().contains("wss://"));
-    Assertions.assertTrue(result.getResponse().getContentAsString().contains(sessionId));
   }
 
   @Test
