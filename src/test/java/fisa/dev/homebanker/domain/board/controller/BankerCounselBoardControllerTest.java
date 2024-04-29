@@ -19,6 +19,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -27,6 +28,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 @DisplayName("문의 게시판 테스트 (은행원)")
 @AutoConfigureMockMvc
+@ActiveProfiles("local")
 public class BankerCounselBoardControllerTest {
 
   @MockBean
@@ -38,7 +40,7 @@ public class BankerCounselBoardControllerTest {
   @Autowired
   WebApplicationContext context;
 
-  private String BANKER_LOGIN_ID = "admin";
+  private String BANKER_LOGIN_ID = "banker";
   private String BANKER_LOGIN_PASSWORD = "pw";
   private String token;
 

@@ -15,6 +15,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -23,6 +24,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 @AutoConfigureMockMvc
 @DisplayName("로그인 테스트")
+@ActiveProfiles("local")
 public class LoginControllerTest {
 
   @Autowired
@@ -33,8 +35,8 @@ public class LoginControllerTest {
 
   @Autowired
   JwtUtil jwtUtil;
-  private final String CUSTOMER_LOGIN_ID = "id";
-  private final String BANKER_LOGIN_ID = "admin";
+  private final String CUSTOMER_LOGIN_ID = "customer";
+  private final String BANKER_LOGIN_ID = "banker";
   private final String LOGIN_PASSWORD = "pw";
   private final String LOGIN_WRONG_PASSWORD = "pww";
   private final String ROLE_CUSTOMER = "ROLE_CUSTOMER";

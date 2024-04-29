@@ -26,6 +26,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -34,6 +35,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 @DisplayName("상품 관리 테스트")
 @AutoConfigureMockMvc
+@ActiveProfiles("local")
 public class ProductControllerTest {
 
   @MockBean
@@ -46,7 +48,7 @@ public class ProductControllerTest {
   WebApplicationContext context;
 
   private String token;
-  private String BANKER_LOGIN_ID = "admin";
+  private String BANKER_LOGIN_ID = "banker";
   private String BANKER_LOGIN_PASSWORD = "pw";
 
   public String login() throws Exception {

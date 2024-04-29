@@ -2,6 +2,7 @@ package fisa.dev.homebanker.domain.mypage.controller;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
@@ -28,6 +29,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -36,6 +38,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 @DisplayName("마이페이지 프로필 테스트")
 @AutoConfigureMockMvc
+@ActiveProfiles("local")
 public class MyPageControllerTest {
 
   @MockBean
@@ -47,7 +50,7 @@ public class MyPageControllerTest {
   @Autowired
   WebApplicationContext context;
 
-  private String CUSTOMER_LOGIN_ID = "id";
+  private String CUSTOMER_LOGIN_ID = "customer";
   private String CUSTOMER_LOGIN_PASSWORD = "pw";
   private String token;
 
@@ -146,8 +149,8 @@ public class MyPageControllerTest {
         .productId(7L)
         .productName("예금")
         .productDescription("예금상품입니다")
-        .customerId(1)
-        .bankerId(2)
+        .customerLoginId("id")
+        .bankerLoginId("admin")
         .createdAt(LocalDate.of(2024, 4, 20))
         .build();
 
@@ -165,7 +168,7 @@ public class MyPageControllerTest {
     saleListDTO.setSaleItems(saleItems);
     saleListDTO.setPagination(paginationDTO);
 
-    given(myPageService.findAllSales(anyInt(), anyInt()))
+    given(myPageService.findAllSales(anyInt(), anyInt(), anyString()))
         .willReturn(saleListDTO);
 
     //when
@@ -183,7 +186,7 @@ public class MyPageControllerTest {
         .andReturn();
 
     //then
-    verify(myPageService).findAllSales(anyInt(), anyInt());
+    verify(myPageService).findAllSales(anyInt(), anyInt(), anyString());
   }
 
 }

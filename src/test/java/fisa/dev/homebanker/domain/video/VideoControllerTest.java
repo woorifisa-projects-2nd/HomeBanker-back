@@ -21,6 +21,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -29,6 +30,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 @DisplayName("화상 상담 테스트")
 @AutoConfigureMockMvc
+@ActiveProfiles("local")
 public class VideoControllerTest {
 
   @MockBean
@@ -39,7 +41,7 @@ public class VideoControllerTest {
 
   @Autowired
   WebApplicationContext context;
-  private String BANKER_LOGIN_ID = "admin";
+  private String BANKER_LOGIN_ID = "banker";
   private String CUSTOMER_LOGIN_ID = "id";
   private String BANKER_LOGIN_PASSWORD = "pw";
   private String token;
@@ -126,7 +128,7 @@ public class VideoControllerTest {
   public void createTokenSuccess() throws Exception {
     String sessionId = "sessionA";
     Map<String, Object> map = new HashMap<>();
-    String domain = "firstpenguin.shop";
+    String domain = "homebanker.shop";
     String openviduToken = "wss://" + domain + "?sessionId=" + sessionId + "&token=";
 
     given(openviduController.createConnection(sessionId, map)).willReturn(

@@ -9,10 +9,12 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ActiveProfiles;
 
 @SpringBootTest
 @DisplayName("문의 게시판 테스트 (은행원)")
 @ExtendWith(MockitoExtension.class)
+@ActiveProfiles("local")
 class BankerCounselBoardServiceTest {
 
   @Autowired
@@ -20,7 +22,7 @@ class BankerCounselBoardServiceTest {
   @Autowired
   CounselBoardRepository counselBoardRepository;
 
-  private final String loginId = "admin";
+  private final String loginId = "banker";
 
   @Test
   @DisplayName("문의 게시글 삭제-성공")
