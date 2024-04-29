@@ -1,12 +1,14 @@
-DROP TABLE users IF EXISTS;
-DROP TABLE product IF EXISTS;
-DROP TABLE sale IF EXISTS;
-DROP TABLE board IF EXISTS;
-DROP TABLE counsel IF EXISTS;
-DROP TABLE identified IF EXISTS;
-DROP TABLE product_code IF EXISTS;
-DROP TABLE banker_log IF EXISTS;
-DROP TABLE customer_log IF EXISTS;
+
+DROP TABLE IF EXISTS users cascade ;
+DROP TABLE  IF EXISTS product cascade;
+DROP TABLE  IF EXISTS sale cascade;
+DROP TABLE  IF EXISTS board cascade;
+DROP TABLE  IF EXISTS counsel cascade;
+DROP TABLE  IF EXISTS identified cascade;
+DROP TABLE  IF EXISTS product_code cascade;
+DROP TABLE  IF EXISTS banker_log cascade;
+DROP TABLE  IF EXISTS customer_log cascade;
+
 
 
 CREATE TABLE `users` (
@@ -125,4 +127,4 @@ ALTER TABLE `banker_log` ADD CONSTRAINT `PK_BANKER_LOG` PRIMARY KEY (
                                                                      `log_id`
     );
 
-ALTER TABLE `board` ADD CONSTRAINT `FK_BOARD_USER` FOREIGN KEY (customer_id) REFERENCES `Users` (id);
+-- ALTER TABLE `board` ADD CONSTRAINT `FK_BOARD_USER` FOREIGN KEY (customer_id) REFERENCES `Users` (id);
