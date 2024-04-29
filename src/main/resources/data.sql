@@ -6,16 +6,16 @@ INSERT INTO USERS (name, birth, phone, address, login_id, login_pw, role, identi
     ('은행원', '1998-04-20', '01086249375', '서울', 'admin', '$2a$10$lBV.lzUehu2BqtPNzccAdetTX.gFSGwwMstNNZ/qt4lyk68cwVmhC', 'ROLE_ADMIN',
      '980420-2222222', '2024-04-16');
 
-INSERT INTO board (content, reply_YN, created_at, customer_id) VALUES ('안녕', 'F', '2024-12-12 09:09:10', 1);
-INSERT INTO board (content, reply_YN, created_at, customer_id) VALUES ('빠밤', 'F', '2023-12-12 09:09:10', 1);
-INSERT INTO board (content, reply_YN, created_at, customer_id) VALUES ('음식', 'F', '2024-11-12 09:09:10', 1);
-INSERT INTO board (content, reply_YN, created_at, customer_id ) VALUES ('내용', 'F', '2024-12-12 09:09:10', 1);
-INSERT INTO board (content, reply_YN, created_at, customer_id ) VALUES ('내용', 'F', '2024-12-12 09:09:10', 1);
-INSERT INTO board (content, reply_YN, created_at, customer_id ) VALUES ('내용', 'F', '2024-12-12 09:09:10', 1);
-INSERT INTO board (content, reply_YN, created_at, customer_id ) VALUES ('내용', 'F', '2024-12-12 09:09:10', 1);
-INSERT INTO board (content, reply_YN, created_at, customer_id ) VALUES ('내용', 'F', '2024-12-12 09:09:10', 1);
-INSERT INTO board (content, reply_YN, created_at, customer_id ) VALUES ('내용', 'F', '2024-12-12 09:09:10', 1);
-INSERT INTO board (content, reply_YN, created_at, customer_id ) VALUES ('내용', 'F', '2024-12-12 09:09:10', 1);
+INSERT INTO board (content, reply_YN, created_at, customer_id) VALUES ('안녕', 'N', '2024-12-12 09:09:10', 1);
+INSERT INTO board (content, reply_YN, created_at, customer_id) VALUES ('빠밤', 'N', '2023-12-12 09:09:10', 1);
+INSERT INTO board (content, reply_YN, created_at, customer_id) VALUES ('음식', 'N', '2024-11-12 09:09:10', 1);
+INSERT INTO board (content, reply_YN, created_at, customer_id ) VALUES ('내용', 'N', '2024-12-12 09:09:10', 1);
+INSERT INTO board (content, reply_YN, created_at, customer_id ) VALUES ('내용', 'N', '2024-12-12 09:09:10', 1);
+INSERT INTO board (content, reply_YN, created_at, customer_id ) VALUES ('내용', 'N', '2024-12-12 09:09:10', 1);
+INSERT INTO board (content, reply_YN, created_at, customer_id ) VALUES ('내용', 'N', '2024-12-12 09:09:10', 1);
+INSERT INTO board (content, reply_YN, created_at, customer_id ) VALUES ('내용', 'N', '2024-12-12 09:09:10', 1);
+INSERT INTO board (content, reply_YN, created_at, customer_id ) VALUES ('내용', 'N', '2024-12-12 09:09:10', 1);
+INSERT INTO board (content, reply_YN, created_at, customer_id ) VALUES ('내용', 'N', '2024-12-12 09:09:10', 1);
 
 INSERT INTO product_code (product_code, type_name) VALUES ('Y001', '예금');
 INSERT INTO product_code (product_code, type_name) VALUES ('Y002', '예금');
