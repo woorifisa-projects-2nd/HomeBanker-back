@@ -59,7 +59,7 @@ public class Sale {
         .productDescription(productId.getProductDescription())
         .saleMonth(saleMonth)
         .saleAmount(saleAmount)
-        .createdAt(createdAt)
+        .createdAt(String.valueOf(createdAt))
         .build();
   }
 }

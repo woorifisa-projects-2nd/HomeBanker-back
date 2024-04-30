@@ -16,6 +16,7 @@ import fisa.dev.homebanker.domain.product.exception.ProductionExceptionEnum;
 import fisa.dev.homebanker.domain.product.repository.ProductRepository;
 import fisa.dev.homebanker.domain.product.repository.SaleRepository;
 import fisa.dev.homebanker.global.util.pagination.PaginationResMaker;
+import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -111,7 +112,7 @@ public class ProductService {
         .productId(product)
         .saleMonth(saleDTO.getSaleMonth())
         .saleAmount(saleDTO.getSaleAmount())
-        .createdAt(saleDTO.getCreatedAt())
+        .createdAt(LocalDate.parse(saleDTO.getCreatedAt()))
         .build());
     return sale.toDto();
   }

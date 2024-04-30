@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
+
+
 @Getter
 @Setter
 @Builder
@@ -34,5 +36,7 @@ public class SaleDTO {
   @Max(value = 2100000000, message = "최대 금액(21억)을 초과하였습니다.")
   private Integer saleAmount;
 
-  private LocalDate createdAt;
+
+  private String createdAt;
+
 }
