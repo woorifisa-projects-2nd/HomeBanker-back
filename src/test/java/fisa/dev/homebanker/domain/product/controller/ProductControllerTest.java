@@ -26,6 +26,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
@@ -34,6 +35,7 @@ import org.springframework.web.context.WebApplicationContext;
 @SpringBootTest
 @DisplayName("상품 관리 테스트")
 @AutoConfigureMockMvc
+@ActiveProfiles("local")
 public class ProductControllerTest {
 
   @MockBean
@@ -46,7 +48,7 @@ public class ProductControllerTest {
   WebApplicationContext context;
 
   private String token;
-  private String BANKER_LOGIN_ID = "admin";
+  private String BANKER_LOGIN_ID = "banker";
   private String BANKER_LOGIN_PASSWORD = "pw";
 
   public String login() throws Exception {
@@ -154,7 +156,7 @@ public class ProductControllerTest {
         .productId(1L)
         .productDescription("카드 상품 조회 테스트")
         .productInterest(null)
-        .isShown(false)
+        .isShown(true)
         .maxMonth(null)
         .productCode(new ProductCode("C001", "카드"))
         .build();
@@ -163,9 +165,10 @@ public class ProductControllerTest {
     productDTOS.add(productDTO);
     ProductListDTO productListDTO = new ProductListDTO(paginationDTO, productDTOS);
 
-    given(productService.findAllProducts(category, page, size))
+    given(productService.findAllProducts(category, size, page))
         .willReturn(productListDTO);
 
+    //when
     MvcResult result = mockMvc.perform(
             get("/api/banker/product?category=" + category + "&page=" + page + "&size=" + size)
                 .header("Authorization", "Bearer " + token)//jwt 담기
@@ -177,6 +180,7 @@ public class ProductControllerTest {
         .andExpect(jsonPath("$.productItems[0].productCode.typeName").value("카드"))
         .andReturn();
 
+    //then
     verify(productService).findAllProducts(category, size, page);
   }
 
