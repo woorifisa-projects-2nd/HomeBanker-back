@@ -34,7 +34,7 @@ public class CounselBoardService {
     if (size <= 0) {
       throw new CounselBoardException(CounselBoardExceptionEnum.C003);
     }
-    Pageable pageable = PageRequest.of(page, size, Direction.ASC, "createdAt");
+    Pageable pageable = PageRequest.of(page, size, Direction.DESC, "createdAt");
 
     User user = userRepository.findByLoginId(loginId);
 
