@@ -52,7 +52,6 @@ public class User {
   @Column(nullable = false)
   private String identificationNum;
 
-  @Column(nullable = false)
   private LocalDateTime recentLogin;
 
   @Column(nullable = false)
