@@ -13,7 +13,8 @@ public class IdentifyUserService {
 
   @PostConstruct // 의존성 주입이 이루어진 후 초기화를 수행
   public void initWebClient() {
-    webClient = WebClient.create("http://localhost:8081/verification");
+//    webClient = WebClient.create("http://localhost:8081/verification");
+    webClient = WebClient.create("http://3.37.53.219:8081/verification");
   }
 
   public boolean identifyUser(IdCardContentDTO idCardContentDTO) {
