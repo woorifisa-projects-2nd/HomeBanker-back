@@ -48,7 +48,7 @@ public class CounselBoard {
 
   private LocalDateTime createdAt;
 
-  @Column(nullable = false)
+  @Column
   private LocalDateTime updatedAt;
 
   public CounselBoardDTO toDto() {

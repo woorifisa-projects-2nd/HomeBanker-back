@@ -1,6 +1,6 @@
 package fisa.dev.homebanker.domain.video.controller;
 
-import fisa.dev.homebanker.domain.board.dto.IdCardContentDTO;
+import fisa.dev.homebanker.domain.video.dto.IdCardContentDTO;
 import fisa.dev.homebanker.domain.video.service.IdentifyUserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;

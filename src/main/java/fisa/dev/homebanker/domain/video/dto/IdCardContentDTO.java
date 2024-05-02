@@ -1,5 +1,4 @@
-
-package fisa.dev.homebanker.domain.board.dto;
+package fisa.dev.homebanker.domain.video.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Getter
 public class IdCardContentDTO {
-	private String identity;
-	private String userName;
+
+  private String identity;
+  private String userName;
 
 }
 
