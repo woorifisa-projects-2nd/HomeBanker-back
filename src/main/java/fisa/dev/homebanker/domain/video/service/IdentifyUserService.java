@@ -1,6 +1,6 @@
 package fisa.dev.homebanker.domain.video.service;
 
-import fisa.dev.homebanker.domain.board.dto.IdCardContentDTO;
+import fisa.dev.homebanker.domain.video.dto.IdCardContentDTO;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
