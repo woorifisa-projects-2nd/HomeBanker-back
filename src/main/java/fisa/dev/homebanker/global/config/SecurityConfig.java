@@ -56,9 +56,7 @@ public class SecurityConfig {
             CorsConfiguration configuration = new CorsConfiguration();
             configuration.setAllowedOrigins(Collections.singletonList("https://homebanker-f.shop"));
             configuration.addAllowedOrigin("http://localhost:5173");
-
-            // 신분증 진위확인 API (현재는 EC2 퍼블릭 탄력적 IP로 부여함, 추후에 HTTPS 방식과 도메인 주소로 변경 예정)
-            configuration.addAllowedOrigin("http://3.37.53.219:8081");
+            configuration.addAllowedOrigin("https://home-bank.shop:8081");
             configuration.addAllowedOrigin("http://localhost:8081");
             configuration.setAllowedHeaders(Collections.singletonList("*"));
             configuration.setAllowedMethods(Collections.singletonList("*"));
