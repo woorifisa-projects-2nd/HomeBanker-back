@@ -161,5 +161,21 @@ public class VideoControllerTest {
         .andReturn();
   }
 
+  @Test
+  @DisplayName("신분증 OCR")
+  public void identificationOCR() throws Exception {
+    MvcResult result = mockMvc.perform(post("/api/banker/video/identify")
+            .contentType(MediaType.APPLICATION_JSON)
+            .characterEncoding(StandardCharsets.UTF_8)
+            .header("Authorization", "Bearer " + token)
+            .content("{\n"
+                + "    \"identity\" : \"9804201111111\",\n"
+                + "    \"username\" : \"김경은\"\n"
+                + "}"))
+        .andDo(print())
+        .andExpect(status().is2xxSuccessful())
+        .andReturn();
+  }
+
 
 }

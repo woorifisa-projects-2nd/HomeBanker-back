@@ -12,6 +12,7 @@ import fisa.dev.homebanker.domain.product.exception.ProductException;
 import fisa.dev.homebanker.domain.product.exception.ProductionExceptionEnum;
 import fisa.dev.homebanker.domain.product.repository.SaleRepository;
 import fisa.dev.homebanker.global.util.pagination.PaginationResMaker;
+import java.util.Collections;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -71,14 +72,18 @@ public class MyPageService {
     }
     Pageable pageable = PageRequest.of(page, size, Direction.DESC, "createdAt");
     Page<Sale> foundPage = saleRepository.findAllByCustomerLoginId_LoginId(loginId, pageable);
-    if (foundPage.isEmpty()) {
-      throw new UserException(UserExceptionEnum.P004);
-    }
+
     SaleListDTO saleListDTO = new SaleListDTO();
     saleListDTO.setPagination(paginationResMaker.makePaginationDto(foundPage));
-    List<SaleDTO> saleItems = foundPage.get()
-        .map(sale -> sale.toDto())
-        .toList();
+    List<SaleDTO> saleItems;
+
+    if (foundPage.isEmpty()) {
+      saleItems = Collections.emptyList();
+    } else {
+      saleItems = foundPage.get()
+          .map(sale -> sale.toDto())
+          .toList();
+    }
     saleListDTO.setSaleItems(saleItems);
     return saleListDTO;
   }
