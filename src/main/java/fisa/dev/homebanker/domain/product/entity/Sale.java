@@ -29,12 +29,12 @@ public class Sale {
   private Long saleId;
 
   @ManyToOne
-  @JoinColumn(name = "customer_login_id")
-  private User customerLoginId;
+  @JoinColumn(name = "customer_id")
+  private User customerId;
 
   @ManyToOne
-  @JoinColumn(name = "banker_login_id")
-  private User bankerLoginId;
+  @JoinColumn(name = "banker_id")
+  private User bankerId;
 
   @ManyToOne
   @JoinColumn(name = "product_id")
@@ -52,8 +52,8 @@ public class Sale {
   public SaleDTO toDto() {
     return SaleDTO.builder()
         .saleId(saleId)
-        .customerLoginId(customerLoginId.getLoginId())
-        .bankerLoginId(bankerLoginId.getLoginId())
+        .customerLoginId(customerId.getLoginId())
+        .bankerLoginId(bankerId.getLoginId())
         .productId(productId.getProductId())
         .productName(productId.getProductName())
         .productDescription(productId.getProductDescription())

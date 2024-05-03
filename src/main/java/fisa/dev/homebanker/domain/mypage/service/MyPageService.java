@@ -35,7 +35,7 @@ public class MyPageService {
   public MyPageProfileDTO readMyPage() {
     String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
     User customer = userRepository.findByLoginId(loginId);
-    if (!"ROLE_CUSTOMER" .equals(customer.getRole())) {
+    if (!"ROLE_CUSTOMER".equals(customer.getRole())) {
       throw new UserException(UserExceptionEnum.P002);
     }
     return MyPageProfileDTO.builder()
@@ -49,7 +49,7 @@ public class MyPageService {
   public MyPageProfileDTO updateMyPage(MyPageProfileDTO myPageProfileDTO) {
     String loginId = SecurityContextHolder.getContext().getAuthentication().getName();
     User customer = userRepository.findByLoginId(loginId);
-    if (!"ROLE_CUSTOMER" .equals(customer.getRole())) {
+    if (!"ROLE_CUSTOMER".equals(customer.getRole())) {
       throw new UserException(UserExceptionEnum.P002);
     }
     customer.setName(myPageProfileDTO.getName());
@@ -71,7 +71,7 @@ public class MyPageService {
       throw new ProductException(ProductionExceptionEnum.P004);
     }
     Pageable pageable = PageRequest.of(page, size, Direction.DESC, "createdAt");
-    Page<Sale> foundPage = saleRepository.findAllByCustomerLoginId_LoginId(loginId, pageable);
+    Page<Sale> foundPage = saleRepository.findAllByCustomerId_LoginId(loginId, pageable);
 
     SaleListDTO saleListDTO = new SaleListDTO();
     saleListDTO.setPagination(paginationResMaker.makePaginationDto(foundPage));

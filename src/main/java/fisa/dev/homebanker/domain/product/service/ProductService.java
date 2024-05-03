@@ -31,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional
 public class ProductService {
+
   private final UserRepository userRepository;
   private final ProductRepository productRepository;
   private final SaleRepository saleRepository;
@@ -96,18 +97,18 @@ public class ProductService {
 
   public SaleDTO registerProduct(SaleDTO saleDTO) {
     User customer = userRepository.findByLoginId(saleDTO.getCustomerLoginId());
-    if(!"ROLE_CUSTOMER".equals(customer.getRole())) {
+    if (!"ROLE_CUSTOMER".equals(customer.getRole())) {
       throw new UserException(UserExceptionEnum.P002);
     }
     User banker = userRepository.findByLoginId(saleDTO.getBankerLoginId());
-    if(!"ROLE_ADMIN".equals(banker.getRole())) {
+    if (!"ROLE_ADMIN".equals(banker.getRole())) {
       throw new UserException(UserExceptionEnum.P003);
     }
     Product product = productRepository.findById(saleDTO.getProductId())
         .orElseThrow(() -> new ProductException(ProductionExceptionEnum.P001));
     Sale sale = saleRepository.save(Sale.builder()
-        .customerLoginId(customer)
-        .bankerLoginId(banker)
+        .customerId(customer)
+        .bankerId(banker)
         .productId(product)
         .saleMonth(saleDTO.getSaleMonth())
         .saleAmount(saleDTO.getSaleAmount())
