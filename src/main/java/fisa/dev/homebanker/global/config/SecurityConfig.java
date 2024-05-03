@@ -54,8 +54,10 @@ public class SecurityConfig {
           @Override
           public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
             CorsConfiguration configuration = new CorsConfiguration();
-            //configuration.setAllowedOrigins(Collections.singletonList("http://localhost:5173"));
-            configuration.addAllowedOrigin("https://homebanker-f.shop");//
+            configuration.setAllowedOrigins(Collections.singletonList("https://homebanker-f.shop"));
+            configuration.addAllowedOrigin("http://localhost:5173");
+            configuration.addAllowedOrigin("https://home-bank.shop:8081");
+            configuration.addAllowedOrigin("http://localhost:8081");
             configuration.setAllowedHeaders(Collections.singletonList("*"));
             configuration.setAllowedMethods(Collections.singletonList("*"));
             configuration.setAllowCredentials(true);
