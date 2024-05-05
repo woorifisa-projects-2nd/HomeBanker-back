@@ -59,6 +59,10 @@ dependencies {
     // openvidu
     implementation 'io.openvidu:openvidu-java-client:2.29.0'
 
+    //S3
+    implementation group: 'org.springframework.cloud', name: 'spring-cloud-starter-aws', version: '2.2.6.RELEASE'
+
+
 }
 
 tasks.named('test') {
