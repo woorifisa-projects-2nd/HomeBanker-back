@@ -23,7 +23,6 @@ public class UserRegisterDTO {
   @Pattern(regexp = "^\\d{3}-\\d{3,4}-\\d{4}$", message = "지정된 양식을 지켜주세요. [예시] XXX-XXXX-XXXX")
   private String phone;
 
-  @NotBlank(message = "필수 항목입니다.")
   private String address;
 
   @NotBlank(message = "필수 항목입니다.")
